@@ -1,4 +1,6 @@
-import java.util.Calendar;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -6,29 +8,48 @@ import java.util.Date;
  */
 public class Tache {
 
-    protected String titre;
-    protected DateTime dateDebut;
-    protected DateTime dateFin;
-    protected boolean enRetard;
+    private String titre;
+    private Date dateDebut;
+    private Date dateFin;
 
     public Tache() {}
 
-    public Tache(String titre, String dateDebut, String dateFin)
-    {
+    public Tache(String titre, String dateDebut, String dateFin) {
+        this.titre = titre;
+        try {
+            this.dateDebut = new SimpleDateFormat("dd/mm/yy").parse(dateDebut);
+            this.dateFin = new SimpleDateFormat("dd/mm/yy").parse(dateFin);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        this.titre = titre; 
-       // this.dateDebut = dateDebut;
-       // this.dateFin = dateFin;
-        //this.enRetard =
     }
 
-    public DateTime getDate(String date)
-    {
-        return null;
+    public String getTitre() {
+        return this.titre;
     }
 
-    public boolean estEnRetard()
-    {
-        return true;
+    public void setTitre(String newTitre) {
+        this.titre = newTitre;
+    }
+
+    public Date getDateDebut() {
+        return this.dateDebut;
+    }
+
+    public void setDateDebut(Date newDateDebut) {
+        this.dateDebut = newDateDebut;
+    }
+
+    public Date getDateFin() {
+        return this.dateFin;
+    }
+
+    public void setDateFin(Date newDateFin) {
+        this.dateFin = newDateFin;
+    }
+
+    public boolean isEnRetard() {
+        return this.dateFin.before(new Date());
     }
 }
