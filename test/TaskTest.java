@@ -1,4 +1,3 @@
-import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.*;
 
@@ -9,7 +8,7 @@ import static org.testng.Assert.*;
 /**
  * Created by osiris on 29/10/16.
  */
-public class TacheTest {
+public class TaskTest {
 
     @BeforeClass
     public void setUpBeforeClass() throws Exception{
@@ -41,20 +40,20 @@ public class TacheTest {
         String dateFin = "30/08/16";
 
         Reporter.log("Création d'une tache avec les paramètres (titre: " + titre + ", dateDebut: " + dateDebut + ", dateFin: " + dateFin + ")", true);
-        Tache testTache = Tache.create(titre, dateDebut, dateFin);
+        Task testTask = Task.create(titre, dateDebut, dateFin);
         Reporter.log("OK", true);
 
         Reporter.log("\nLancement des tests:", true);
         Reporter.log("--> tache non nulle", true);
-        assertNotNull(testTache);
+        assertNotNull(testTask);
         Reporter.log("--> tache.titre() == titre", true);
-        assertEquals(testTache.getTitre(), titre);
+        assertEquals(testTask.getTitle(), titre);
         Reporter.log("--> tache.dateDebut() == dateDebut", true);
-        assertEquals(testTache.getDateDebut(), new SimpleDateFormat("dd/mm/yy").parse(dateDebut));
+        assertEquals(testTask.getBeginDate(), new SimpleDateFormat("dd/mm/yy").parse(dateDebut));
         Reporter.log("--> tache.dateFin() == dateFin", true);
-        assertEquals(testTache.getDateFin(), new SimpleDateFormat("dd/mm/yy").parse(dateFin));
+        assertEquals(testTask.getEndDate(), new SimpleDateFormat("dd/mm/yy").parse(dateFin));
         Reporter.log("--> tache.dateDebut < tache.dateFin", true);
-        assertTrue(testTache.getDateDebut().before(testTache.getDateFin()));
+        assertTrue(testTask.getBeginDate().before(testTask.getEndDate()));
         Reporter.log("OK", true);
     }
 

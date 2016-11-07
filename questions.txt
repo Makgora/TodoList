@@ -1,1 +1,1 @@
-Une TacheLongue est elle composee de plusieurs TachePonctuelle ? 
+Une LongTask est elle composee de plusieurs PonctualTask ?
