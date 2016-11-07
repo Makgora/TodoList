@@ -1,4 +1,3 @@
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,15 +13,11 @@ public class Tache {
 
     public Tache() {}
 
-    public Tache(String titre, String dateDebut, String dateFin) {
+    private Tache(String titre, Date dateDebut, Date dateFin)
+    {
         this.titre = titre;
-        try {
-            this.dateDebut = new SimpleDateFormat("dd/mm/yy").parse(dateDebut);
-            this.dateFin = new SimpleDateFormat("dd/mm/yy").parse(dateFin);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
     }
 
     public String getTitre() {
@@ -53,5 +48,28 @@ public class Tache {
         return this.dateFin.before(new Date());
     }
 
+    public static Tache create(String titre, String dateDebut, String dateFin) throws TacheException, ParseException
+    {
+        if(titre == null || dateDebut.equals(null) || dateFin.equals(null))
+        {
+            throw new TacheException("Un des parametres est null");
+        } else
+        {
+            Date newDateDebut = new SimpleDateFormat("dd/mm/yy").parse(dateDebut);
+            Date newDateFin = new SimpleDateFormat("dd/mm/yy").parse(dateFin);
 
+            if(newDateDebut.after(newDateFin))
+            {
+                throw new TacheException("La date de debut de la tache est ulterieure à sa date de fin");
+            } else
+            {
+                return new Tache(titre, newDateDebut, newDateFin);
+            }
+        }
+    }
+
+    public String toString()
+    {
+        return "Titre : " + this.titre + ", Date de debut : " + this.dateDebut.toString() + ", Date de fin : " + this.dateFin.toString();
+    }
 }

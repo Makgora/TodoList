@@ -32,16 +32,16 @@ public class TacheTest {
     }
 
     @Test
-    public void testTache() throws Exception {
+    public void testCreate() throws Exception {
 
-        Reporter.log("Test : testTache", true);
+        Reporter.log("Test : create()", true);
         
         String titre = "TestTache";
         String dateDebut = "28/08/16";
         String dateFin = "30/08/16";
 
         Reporter.log("Création d'une tache avec les paramètres (titre: " + titre + ", dateDebut: " + dateDebut + ", dateFin: " + dateFin + ")", true);
-        Tache testTache = new Tache(titre, dateDebut, dateFin);
+        Tache testTache = Tache.create(titre, dateDebut, dateFin);
         Reporter.log("OK", true);
 
         Reporter.log("\nLancement des tests:", true);
