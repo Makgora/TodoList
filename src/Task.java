@@ -7,14 +7,16 @@ public class Task {
     private String title;
     private Date beginDate;
     private Date endDate;
+    private Category category;
 
     public Task() {}
 
-    private Task(String title, Date beginDate, Date endDate)
+    private Task(String title, Date beginDate, Date endDate, Category category)
     {
         this.title = title;
         this.beginDate = beginDate;
         this.endDate = endDate;
+        this.category = category;
     }
 
     public String getTitle() {
@@ -45,9 +47,9 @@ public class Task {
         return this.endDate.before(new Date());
     }
 
-    public static Task create(String titre, String beginDate, String endDate) throws TaskException, ParseException
+    public static Task create(String titre, String beginDate, String endDate, String category) throws TaskException, ParseException, CategorieException
     {
-        if(titre == null || beginDate == null || endDate == null)
+        if(titre == null || beginDate == null || endDate == null || category == null)
         {
             throw new TaskException("Un des parametres est null");
         } else
@@ -60,7 +62,7 @@ public class Task {
                 throw new TaskException("La date de debut de la tache est ulterieure à sa date de fin");
             } else
             {
-                return new Task(titre, newBeginDate, newDateFin);
+                return new Task(titre, newBeginDate, newDateFin, Category.create(category));
             }
         }
     }

@@ -5,7 +5,7 @@ public class Category {
     private static ArrayList<Category> categories;
     private String name;
 
-    public Category(String name)
+    private Category(String name)
     {
         this.name = name;
         categories.add(this);
@@ -27,7 +27,7 @@ public class Category {
         }
     }
 
-    public Category create(String name) throws CategorieException
+    public static Category create(String name) throws CategorieException
     {
         if(name == null)
         {
@@ -37,6 +37,28 @@ public class Category {
             Category newCat = new Category(name);
             categories.add(newCat);
             return newCat;
+        }
+    }
+
+    public void delete(String oldCat) throws CategorieException
+    {
+        int index;
+
+        if(oldCat == null)
+        {
+            throw new CategorieException("L'argument est null");
+        } else
+        {
+            index = categories.indexOf(oldCat);
+
+            if(index == -1)
+            {
+                throw new CategorieException("La categorie n'existe pas");
+
+            } else
+            {
+                categories.remove(index);
+            }
         }
     }
 }
