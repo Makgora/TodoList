@@ -1,1 +1,1 @@
-Une LongTask est elle composee de plusieurs PonctualTask ?
+Une LongTask est elle composee de plusieurs PunctualTask ?

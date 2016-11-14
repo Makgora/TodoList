@@ -5,10 +5,23 @@ public class Category {
     private static ArrayList<Category> categories;
     private String name;
 
-    private Category(String name)
+    private Category(String name) throws CategorieException
     {
-        this.name = name;
-        categories.add(this);
+        if(name == null)
+        {
+            throw new CategorieException("Le nouveau name est null");
+        } else
+        {
+            if(categories.indexOf(name) == -1)
+            {
+                this.name = name;
+                categories.add(this);
+            }
+            else
+            {
+                this.name = name;
+            }
+        }
     }
 
     public String getName()

@@ -2,6 +2,7 @@ import org.testng.Reporter;
 import org.testng.annotations.*;
 
 import java.text.SimpleDateFormat;
+import java.text.StringCharacterIterator;
 
 import static org.testng.Assert.*;
 
@@ -38,9 +39,10 @@ public class TaskTest {
         String titre = "TestTache";
         String dateDebut = "28/08/16";
         String dateFin = "30/08/16";
+        String category = "Travail";
 
-        Reporter.log("Création d'une tache avec les paramètres (titre: " + titre + ", dateDebut: " + dateDebut + ", dateFin: " + dateFin + ")", true);
-        Task testTask = Task.create(titre, dateDebut, dateFin);
+        Reporter.log("Création d'une tache avec les paramètres (titre: " + titre + ", dateDebut: " + dateDebut + ", dateFin: " + dateFin + ", categorie : " + category + ")", true);
+        Task testTask = Task.create(titre, dateDebut, dateFin, category);
         Reporter.log("OK", true);
 
         Reporter.log("\nLancement des tests:", true);

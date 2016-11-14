@@ -2,23 +2,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Task {
+public abstract class Task {
 
     private String title;
     private Date beginDate;
     private Date endDate;
     private Category category;
-    private boolean isFinished;
 
-    public Task() {}
-
-    private Task(String title, Date beginDate, Date endDate, Category category, boolean isFinished)
+    public Task(String title, String beginDate, String endDate, String category) throws TaskException, CategorieException, ParseException
     {
-        this.title = title;
-        this.beginDate = beginDate;
-        this.endDate = endDate;
-        this.category = category;
-        this.isFinished = isFinished;
+        this.setTitle(title);
+        this.setBeginDate(beginDate);
+        this.setEndDate(endDate);
+        this.setCategory(category);
     }
 
     public String getTitle() {
@@ -47,43 +43,29 @@ public class Task {
 
     public void setBeginDate(String newBeginDate) throws TaskException, ParseException
     {
-        if(newBeginDate == null)
+        Date newBeginDateD = new SimpleDateFormat("dd/mm/yy").parse(newBeginDate);
+
+        if(this.endDate == null || !newBeginDateD.after(this.endDate))
         {
-            throw new TaskException("La nouvelle date de debut est null");
+            this.beginDate = newBeginDateD;
         }
         else
         {
-            Date newBeginDateD = new SimpleDateFormat("dd/mm/yy").parse(newBeginDate);
-
-            if(this.endDate == null || !newBeginDateD.after(this.endDate))
-            {
-                this.beginDate = newBeginDateD;
-            }
-            else
-            {
-                throw new TaskException("La date de debut de la tache est ulterieure à sa date de fin");
-            }
+            throw new TaskException("La date de debut de la tache est ulterieure à sa date de fin");
         }
     }
     
     public void setEndDate(String newEndDate) throws TaskException, ParseException
     {
-        if(newEndDate == null)
+        Date newEndDateD = new SimpleDateFormat("dd/mm/yy").parse(newEndDate);
+
+        if(this.beginDate.after(newEndDateD))
         {
-            throw new TaskException("La nouvelle date de fin est null");
+            throw new TaskException("La date de debut de la tache est ulterieure à sa date de fin");
         }
         else
         {
-            Date newEndDateD = new SimpleDateFormat("dd/mm/yy").parse(newEndDate);
-
-            if(this.beginDate.after(newEndDateD))
-            {
-                throw new TaskException("La date de debut de la tache est ulterieure à sa date de fin");
-            }
-            else
-            {
-                this.endDate = newEndDateD;
-            }
+            this.endDate = newEndDateD;
         }
     }
 
@@ -96,23 +78,9 @@ public class Task {
         return this.endDate.before(new Date());
     }
 
-    public boolean isFinished() {
-        return isFinished;
-    }
-
-    public static Task create(String title, String beginDate, String endDate, String category) throws TaskException, ParseException, CategorieException
-    {
-        Task task = new Task();
-        task.setTitle(title);
-        task.setBeginDate(beginDate);
-        task.setEndDate(endDate);
-        task.setCategory(category);
-        return task;
-    }
-
     public void modify(String newTitle, String newEndDate, String newCategory) throws TaskException, ParseException, CategorieException
     {
-        if(this.isFinished())
+        if(this.isAccomplished())
         {
             throw new TaskException("La tâche est déjà terminée");
         }
@@ -122,8 +90,9 @@ public class Task {
             this.setEndDate(newEndDate);
             this.setCategory(newCategory);
         }
-
     }
+
+    public abstract boolean isAccomplished();
 
     public String toString()
     {
