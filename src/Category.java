@@ -33,17 +33,21 @@ public class Category {
         if(name == null)
         {
             throw new CategorieException("Le nouveau name est null");
-        } else if(categories.contains(name))
+        } else
         {
-            throw new CategorieException("La categorie existe deja");
-        }
-        else
-        {
-            Category newCat = new Category(name);
-            categories.add(newCat);
-            return newCat;
-        }
+            int i = categories.indexOf(name);
 
+            if(i != -1)
+            {
+                return categories.get(i);
+            }
+            else
+            {
+                Category newCat = new Category(name);
+                categories.add(newCat);
+                return newCat;
+            }
+        }
     }
 
     public void delete(String oldCat) throws CategorieException

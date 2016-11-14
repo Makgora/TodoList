@@ -87,16 +87,9 @@ public class Task {
         }
     }
 
-    public void setCategory(Category newCategory) throws TaskException
+    public void setCategory(String newCategory) throws CategorieException
     {
-        if(newCategory == null)
-        {
-            throw new TaskException("La nouvelle category est null");
-        }
-        else
-        {
-            this.category = newCategory;
-        }
+        this.category = Category.create(newCategory);
     }
 
     public boolean isLate() {
@@ -113,34 +106,23 @@ public class Task {
         task.setTitle(title);
         task.setBeginDate(beginDate);
         task.setEndDate(endDate);
-        task.setCategory(Category.create(category));
+        task.setCategory(category);
         return task;
     }
 
-    public void modify(String newTitle, Date newEndDate, Category newCategory) throws TaskException
+    public void modify(String newTitle, String newEndDate, String newCategory) throws TaskException, ParseException, CategorieException
     {
         if(this.isFinished())
         {
-            throw new TaskException("La tache est terminee, on ne peut plus la modifier");
+            throw new TaskException("La tâche est déjà terminée");
         }
         else
         {
-            if(newTitle != null) {this.title = newTitle;}
-
-            if(newCategory != null) {this.category = newCategory;}
-
-            if(newEndDate != null)
-            {
-                if(newEndDate.before(this.beginDate))
-                {
-                    throw new TaskException("La nouvelle date de fin est antérieure à la date de debut");
-                }
-                else
-                {
-                    this.endDate = newEndDate;
-                }
-            }
+            this.setTitle(newTitle);
+            this.setEndDate(newEndDate);
+            this.setCategory(newCategory);
         }
+
     }
 
     public String toString()
