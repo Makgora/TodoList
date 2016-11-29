@@ -1,3 +1,5 @@
+package Model;
+
 public class Main {
     public static void main(String[] arg) throws Exception {
         Task t = new PunctualTask("Test", "28/06/95", "29/06/95", "TestCat");

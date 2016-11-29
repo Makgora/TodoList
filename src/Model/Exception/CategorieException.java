@@ -1,3 +1,5 @@
+package Model.Exception;
+
 /**
  * Created by osiris on 07/11/16.
  */

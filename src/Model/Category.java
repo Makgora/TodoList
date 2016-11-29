@@ -1,6 +1,7 @@
-import org.intellij.lang.annotations.Flow;
+package Model;
+
+import Model.Exception.CategorieException;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 

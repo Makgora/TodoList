@@ -1,3 +1,8 @@
+package Model;
+
+import Model.Exception.CategorieException;
+import Model.Exception.TaskException;
+
 import java.text.ParseException;
 
 public class PunctualTask extends Task {

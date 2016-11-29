@@ -6,10 +6,7 @@ import java.text.StringCharacterIterator;
 
 import static org.testng.Assert.*;
 
-/**
- * Created by osiris on 29/10/16.
- */
-public class TaskTest {
+public abstract class MainTest {
 
     @BeforeClass
     public void setUpBeforeClass() throws Exception {
@@ -35,10 +32,4 @@ public class TaskTest {
     public void tearDownAfterMethod() throws Exception {
         Reporter.log("--------------------------------------------------------------------------------------------------", true);
     }
-
-    @Test
-    public void testCreate() throws Exception {
-        Reporter.log("Création des tâches", true);
-    }
-
 }
