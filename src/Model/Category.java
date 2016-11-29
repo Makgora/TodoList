@@ -1,19 +1,19 @@
 package Model;
 
-import Model.Exception.CategorieException;
+import Controller.CategoryList;
+import Controller.TaskList;
+import Model.Exception.CategoryException;
+import Model.Exception.TaskException;
 import org.jetbrains.annotations.Contract;
-
-import java.util.*;
 
 public class Category {
 
     private String name;
-    private static HashMap<Category, List<Task>> categories = new HashMap<>();
 
-    private Category(String name) throws CategorieException
+    private Category(String name) throws CategoryException
     {
-        this.name = name;
-        categories.put(this, new ArrayList<>());
+        this.setName(name);
+        CategoryList.getCategoryList().addNewCategory(this);
     }
 
     public String getName()
@@ -21,23 +21,11 @@ public class Category {
         return this.name;
     }
 
-    public static Category exist(String name)
-    {
-        for (Category category : categories.keySet())
-        {
-            if (category.getName().equals(name))
-            {
-                return category;
-            }
-        }
-        return null;
-    }
-
-    public void modify(String newName) throws CategorieException
+    public void setName(String newName) throws CategoryException
     {
         if(newName == null)
         {
-            throw new CategorieException("Le nouveau name est null");
+            throw new CategoryException("Le nouveau name est null");
         }
         else
         {
@@ -46,49 +34,38 @@ public class Category {
     }
 
     @Contract("null -> fail")
-    public static Category create(String name) throws CategorieException
+    public static Category create(String name) throws CategoryException
     {
-        if(name == null)
+        Category categoryToCreate = CategoryList.getCategoryList().getCategory("name");
+
+        if(categoryToCreate != null)
         {
-            throw new CategorieException("Le nouveau name est null");
+            return categoryToCreate;
         }
         else
         {
-            Category categoryToCreate = exist(name);
-            if(categoryToCreate != null)
-            {
-                return categoryToCreate;
-            }
-            else
-            {
-                return new Category(name);
-            }
+            return new Category(name);
         }
     }
 
-    public static void delete(String oldCat) throws CategorieException
+    public static void delete(String oldCat) throws CategoryException, TaskException
     {
-        int index;
 
         if(oldCat == null)
         {
-            throw new CategorieException("L'argument est null");
-        } else
+            throw new CategoryException("L'argument est null");
+        }
+        else
         {
-            Category categoryToDelete = exist(oldCat);
+            Category categoryToDelete = CategoryList.getCategoryList().getCategory("name");
 
             if(categoryToDelete == null)
             {
-                throw new CategorieException("La categorie n'existe pas");
+                throw new CategoryException("La categorie n'existe pas");
 
             } else
             {
-
-                for(Task task : categories.get(categoryToDelete))
-                {
-                    task.setCategory("SansCategory");
-                }
-                categories.remove(categoryToDelete);
+                TaskList.getTaskList().removeAllCategory(categoryToDelete);
             }
         }
     }

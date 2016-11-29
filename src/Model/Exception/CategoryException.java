@@ -3,9 +3,9 @@ package Model.Exception;
 /**
  * Created by osiris on 07/11/16.
  */
-public class CategorieException extends Exception {
+public class CategoryException extends Exception {
 
-    public CategorieException(String msg)
+    public CategoryException(String msg)
     {
         super(msg);
     }

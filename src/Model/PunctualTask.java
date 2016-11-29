@@ -1,6 +1,6 @@
 package Model;
 
-import Model.Exception.CategorieException;
+import Model.Exception.CategoryException;
 import Model.Exception.TaskException;
 
 import java.text.ParseException;
@@ -9,7 +9,7 @@ public class PunctualTask extends Task {
 
     private boolean isAccomplished;
 
-    public PunctualTask(String title, String beginDate, String endDate, String category) throws TaskException, ParseException, CategorieException
+    public PunctualTask(String title, String beginDate, String endDate, String category) throws TaskException, ParseException, CategoryException
     {
         super(title, beginDate, endDate, category);
         this.isAccomplished = false;
