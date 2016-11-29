@@ -29,6 +29,11 @@ public abstract class Task {
         return this.endDate;
     }
 
+    public Category getCategory()
+    {
+        return this.category;
+    }
+
     public void setTitle(String newTitle) throws TaskException
     {
         if(newTitle == null)
@@ -45,13 +50,13 @@ public abstract class Task {
     {
         Date newBeginDateD = new SimpleDateFormat("dd/mm/yy").parse(newBeginDate);
 
-        if(this.endDate == null || !newBeginDateD.after(this.endDate))
+        if(this.endDate == null || newBeginDateD.before(this.endDate))
         {
             this.beginDate = newBeginDateD;
         }
         else
         {
-            throw new TaskException("La date de debut de la tache est ulterieure à sa date de fin");
+            throw new TaskException("La nouvelle date de debut de la tache est ulterieure à sa date de fin");
         }
     }
     
@@ -59,13 +64,13 @@ public abstract class Task {
     {
         Date newEndDateD = new SimpleDateFormat("dd/mm/yy").parse(newEndDate);
 
-        if(this.beginDate.after(newEndDateD))
+        if(this.endDate == null || newEndDateD.after(this.beginDate))
         {
-            throw new TaskException("La date de debut de la tache est ulterieure à sa date de fin");
+            this.endDate = newEndDateD;
         }
         else
         {
-            this.endDate = newEndDateD;
+            throw new TaskException("La nouvelle date de fin de la tache est anterieure à sa date de debut");
         }
     }
 
@@ -78,7 +83,7 @@ public abstract class Task {
         return this.endDate.before(new Date());
     }
 
-    public void modify(String newTitle, String newEndDate, String newCategory) throws TaskException, ParseException, CategorieException
+    public void modify(String newTitle, String newCategory) throws TaskException, ParseException, CategorieException
     {
         if(this.isAccomplished())
         {
@@ -87,7 +92,6 @@ public abstract class Task {
         else
         {
             this.setTitle(newTitle);
-            this.setEndDate(newEndDate);
             this.setCategory(newCategory);
         }
     }

@@ -12,86 +12,33 @@ import static org.testng.Assert.*;
 public class TaskTest {
 
     @BeforeClass
-    public void setUpBeforeClass() throws Exception{
-        Reporter.log(" \n - Start of " + this.getClass() + " -", true);
+    public void setUpBeforeClass() throws Exception {
+        Reporter.log("\n==================================================================================================", true);
+        Reporter.log(" - Start of " + this.getClass() + " -", true);
+        Reporter.log("==================================================================================================", true);
     }
 
     @AfterClass
     public void tearDownAfterClass() {
-        Reporter.log(" \n - End of " + this.getClass() + " -", true);
+        Reporter.log("\n==================================================================================================", true);
+        Reporter.log(" - End of " + this.getClass() + " -", true);
+        Reporter.log("==================================================================================================", true);
+
     }
 
     @BeforeMethod
     public void setUpBeforeMethod() throws Exception {
-        Reporter.log("---------------------------------------------------------------------------------------------------", true);
+        Reporter.log("--------------------------------------------------------------------------------------------------", true);
     }
 
     @AfterMethod
     public void tearDownAfterMethod() throws Exception {
-        Reporter.log("---------------------------------------------------------------------------------------------------", true);
+        Reporter.log("--------------------------------------------------------------------------------------------------", true);
     }
 
     @Test
     public void testCreate() throws Exception {
-
-        Reporter.log("Test : create()", true);
-        
-        String titre = "TestTache";
-        String dateDebut = "28/08/16";
-        String dateFin = "30/08/16";
-        String category = "Travail";
-
-        Reporter.log("Création d'une tache avec les paramètres (titre: " + titre + ", dateDebut: " + dateDebut + ", dateFin: " + dateFin + ", categorie : " + category + ")", true);
-        Task testTask = Task.create(titre, dateDebut, dateFin, category);
-        Reporter.log("OK", true);
-
-        Reporter.log("\nLancement des tests:", true);
-        Reporter.log("--> tache non nulle", true);
-        assertNotNull(testTask);
-        Reporter.log("--> tache.titre() == titre", true);
-        assertEquals(testTask.getTitle(), titre);
-        Reporter.log("--> tache.dateDebut() == dateDebut", true);
-        assertEquals(testTask.getBeginDate(), new SimpleDateFormat("dd/mm/yy").parse(dateDebut));
-        Reporter.log("--> tache.dateFin() == dateFin", true);
-        assertEquals(testTask.getEndDate(), new SimpleDateFormat("dd/mm/yy").parse(dateFin));
-        Reporter.log("--> tache.dateDebut < tache.dateFin", true);
-        assertTrue(testTask.getBeginDate().before(testTask.getEndDate()));
-        Reporter.log("OK", true);
-    }
-
-    @Test
-    public void testGetTitre() throws Exception {
-
-    }
-
-    @Test
-    public void testSetTitre() throws Exception {
-
-    }
-
-    @Test
-    public void testGetDateDebut() throws Exception {
-
-    }
-
-    @Test
-    public void testSetDateDebut() throws Exception {
-
-    }
-
-    @Test
-    public void testGetDateFin() throws Exception {
-
-    }
-
-    @Test
-    public void testSetDateFin() throws Exception {
-
-    }
-
-    @Test
-    public void testIsEnRetard() throws Exception {
-
+        Reporter.log("Création des tâches", true);
     }
 
 }

@@ -1,32 +1,35 @@
-import java.util.ArrayList;
+import org.intellij.lang.annotations.Flow;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
 
 public class Category {
 
-    private static ArrayList<Category> categories;
     private String name;
+    private static HashMap<Category, List<Task>> categories = new HashMap<>();
 
     private Category(String name) throws CategorieException
     {
-        if(name == null)
-        {
-            throw new CategorieException("Le nouveau name est null");
-        } else
-        {
-            if(categories.indexOf(name) == -1)
-            {
-                this.name = name;
-                categories.add(this);
-            }
-            else
-            {
-                this.name = name;
-            }
-        }
+        this.name = name;
+        categories.put(this, new ArrayList<>());
     }
 
     public String getName()
     {
         return this.name;
+    }
+
+    public static Category exist(String name)
+    {
+        for (Category category : categories.keySet())
+        {
+            if (category.getName().equals(name))
+            {
+                return category;
+            }
+        }
+        return null;
     }
 
     public void modify(String newName) throws CategorieException
@@ -41,29 +44,28 @@ public class Category {
         }
     }
 
+    @Contract("null -> fail")
     public static Category create(String name) throws CategorieException
     {
         if(name == null)
         {
             throw new CategorieException("Le nouveau name est null");
-        } else
+        }
+        else
         {
-            int i = categories.indexOf(name);
-
-            if(i != -1)
+            Category categoryToCreate = exist(name);
+            if(categoryToCreate != null)
             {
-                return categories.get(i);
+                return categoryToCreate;
             }
             else
             {
-                Category newCat = new Category(name);
-                categories.add(newCat);
-                return newCat;
+                return new Category(name);
             }
         }
     }
 
-    public void delete(String oldCat) throws CategorieException
+    public static void delete(String oldCat) throws CategorieException
     {
         int index;
 
@@ -72,16 +74,26 @@ public class Category {
             throw new CategorieException("L'argument est null");
         } else
         {
-            index = categories.indexOf(oldCat);
+            Category categoryToDelete = exist(oldCat);
 
-            if(index == -1)
+            if(categoryToDelete == null)
             {
                 throw new CategorieException("La categorie n'existe pas");
 
             } else
             {
-                categories.remove(index);
+
+                for(Task task : categories.get(categoryToDelete))
+                {
+                    task.setCategory("SansCategory");
+                }
+                categories.remove(categoryToDelete);
             }
         }
+    }
+
+    public String toString()
+    {
+        return this.getName();
     }
 }
