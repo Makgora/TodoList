@@ -1,23 +1,19 @@
 package Model;
 
+import Controller.CategoryList;
+import Controller.TaskList;
+
 public class Main {
-    public static void main(String[] arg) throws Exception {
-        Task t = new PunctualTask("Test", "28/06/95", "29/06/95", "TestCat");
-        System.out.println(t.toString());
+    public static void main(String[] arg) throws Exception
+    {
 
-        Category.delete("TestCat");
+        Task t1 = new PunctualTask("Test", "22/05/95", "23/05/95", "Travail");
+        Task t2 = new PunctualTask("Test2", "24/05/95", "25/05/95", "Travail");
+        Task t3 = new PunctualTask("Test2", "24/05/95", "25/05/95", "Ludique");
 
-        System.out.println(t.toString());
+        TaskList.getTaskList().serialize();
+        CategoryList.getCategoryList().serialize();
 
-        Integer f = new Integer(1);
-        Integer g = f;
-
-        System.out.println(f);
-        System.out.println(g);
-
-        f++;
-
-        System.out.println(f);
-        System.out.println(g);
+        System.out.println(TaskList.getTaskList());
     }
 }

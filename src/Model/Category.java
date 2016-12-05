@@ -6,7 +6,9 @@ import Model.Exception.CategoryException;
 import Model.Exception.TaskException;
 import org.jetbrains.annotations.Contract;
 
-public class Category {
+import java.io.Serializable;
+
+public class Category implements Serializable {
 
     private String name;
 
@@ -36,7 +38,7 @@ public class Category {
     @Contract("null -> fail")
     public static Category create(String name) throws CategoryException
     {
-        Category categoryToCreate = CategoryList.getCategoryList().getCategory("name");
+        Category categoryToCreate = CategoryList.getCategoryList().getCategory(name);
 
         if(categoryToCreate != null)
         {
@@ -65,7 +67,7 @@ public class Category {
 
             } else
             {
-                TaskList.getTaskList().removeAllCategory(categoryToDelete);
+                TaskList.getTaskList().removeACategoryFromAllTask(categoryToDelete);
             }
         }
     }

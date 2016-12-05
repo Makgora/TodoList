@@ -4,11 +4,12 @@ import Controller.TaskList;
 import Model.Exception.CategoryException;
 import Model.Exception.TaskException;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public abstract class Task {
+public abstract class Task implements Serializable {
 
     private String title;
     private Date beginDate;
@@ -24,7 +25,8 @@ public abstract class Task {
         TaskList.getTaskList().addNewTask(this);
     }
 
-    public String getTitle() {
+    public String getTitle()
+    {
         return this.title;
     }
 
@@ -45,13 +47,16 @@ public abstract class Task {
     {
         if(this.isAccomplished())
         {
-            throw new TaskException("La tâche est déjà terminée");
+            throw new TaskException("Task already accomplished");
         }
         else
         {
-            if (newTitle == null) {
-                throw new TaskException("Le nouveau titre est null");
-            } else {
+            if (newTitle == null)
+            {
+                throw new TaskException("New title is null");
+            }
+            else
+            {
                 this.title = newTitle;
             }
         }
@@ -63,14 +68,17 @@ public abstract class Task {
 
         if(this.isAccomplished())
         {
-            throw new TaskException("La tâche est déjà terminée");
+            throw new TaskException("Task already accomplished");
         }
         else
         {
-            if (this.endDate == null || newBeginDateD.before(this.endDate)) {
+            if (this.endDate == null || newBeginDateD.before(this.endDate))
+            {
                 this.beginDate = newBeginDateD;
-            } else {
-                throw new TaskException("La nouvelle date de debut de la tache est ulterieure à sa date de fin");
+            } 
+            else
+            {
+                throw new TaskException("New BeginDate has to be before EndDate");
             }
         }
     }
@@ -81,13 +89,16 @@ public abstract class Task {
 
         if(this.isAccomplished())
         {
-            throw new TaskException("La tâche est déjà terminée");
+            throw new TaskException("Task already accomplished");
         }
         else
         {
-            if (this.endDate == null || newEndDateD.after(this.beginDate)) {
+            if (this.endDate == null || newEndDateD.after(this.beginDate))
+            {
                 this.endDate = newEndDateD;
-            } else {
+            }
+            else
+            {
                 throw new TaskException("La nouvelle date de fin de la tache est anterieure à sa date de debut");
             }
         }
@@ -97,7 +108,7 @@ public abstract class Task {
     {
         if(this.isAccomplished())
         {
-            throw new TaskException("La tâche est déjà terminée");
+            throw new TaskException("Task already accomplished");
         }
         else
         {
@@ -113,6 +124,6 @@ public abstract class Task {
 
     public String toString()
     {
-        return "Titre : " + this.title + ", Date de debut : " + this.beginDate.toString() + ", Date de fin : " + this.endDate.toString() + ", Categorie : " + this.category;
+        return "Title: " + this.title + ", BeginDate: " + this.beginDate.toString() + ", EndDate: " + this.endDate.toString() + ", Category: " + this.category;
     }
 }

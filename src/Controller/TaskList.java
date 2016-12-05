@@ -2,24 +2,31 @@ package Controller;
 
 import Model.Category;
 import Model.Exception.CategoryException;
+import Model.Exception.TaskException;
 import Model.Task;
 
+import java.io.*;
 import java.util.ArrayList;
 
-/**
- * Created by osiris on 29/11/16.
- */
-public class TaskList {
+public class TaskList implements Serializable {
 
     private ArrayList<Task> tasks;
     private static TaskList taskList;
 
     private TaskList()
     {
-        //TODO SERIALISER
+        if(!new File("TaskList.ser").exists())  //File doesn't exist (first execution)
+        {
+            this.tasks = new ArrayList<>();
+            taskList = this;
+        }
+        else                //Deserialise taskList from file
+        {
+            taskList = deserialize();
+        }
     }
 
-    public static TaskList getTaskList()
+    public static TaskList getTaskList()    //return the static object taskList or create one if first execution
     {
         if(taskList == null)
         {
@@ -28,6 +35,41 @@ public class TaskList {
         else
         {
             return taskList;
+        }
+    }
+
+    public void serialize() throws IOException
+    {
+        File file = new File("TaskList.ser");
+        file.createNewFile(); //Make a file if doesn't exist
+
+        FileOutputStream fileOut = new FileOutputStream(file);
+        ObjectOutputStream outStream = new ObjectOutputStream(fileOut);
+
+        outStream.writeObject(this);
+
+        outStream.close();
+        fileOut.close();
+    }
+
+    private static TaskList deserialize()
+    {
+        try
+        {
+            FileInputStream fileIn = new FileInputStream(new File("TaskList.ser"));
+            ObjectInputStream inStream = new ObjectInputStream(fileIn);
+
+            TaskList taskList = (TaskList)inStream.readObject();
+
+            inStream.close();
+            fileIn.close();
+
+            return taskList;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -41,7 +83,7 @@ public class TaskList {
         return this.tasks;
     }
 
-    public void removeAllCategory(Category cat) throws CategoryException
+    public void removeACategoryFromAllTask(Category cat) throws CategoryException, TaskException
     {
         for(Task task : this.tasks)
         {
@@ -50,5 +92,15 @@ public class TaskList {
                 task.setCategory("SansCategorie");
             }
         }
+    }
+
+    public String toString()
+    {
+        String list = "Task List:";
+        for(Task task : getTaskList().tasks)
+        {
+            list = list + "\n" + task.toString();
+        }
+        return list;
     }
 }

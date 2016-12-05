@@ -3,9 +3,10 @@ package Model;
 import Model.Exception.CategoryException;
 import Model.Exception.TaskException;
 
+import java.io.Serializable;
 import java.text.ParseException;
 
-public class PunctualTask extends Task {
+public class PunctualTask extends Task implements Serializable {
 
     private boolean isAccomplished;
 
