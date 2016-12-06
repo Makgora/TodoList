@@ -5,6 +5,7 @@ import Model.Exception.TaskException;
 
 import java.io.Serializable;
 import java.text.ParseException;
+import java.util.Date;
 
 public class PunctualTask extends Task implements Serializable {
 

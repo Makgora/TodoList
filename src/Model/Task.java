@@ -116,7 +116,8 @@ public abstract class Task implements Serializable {
         }
     }
 
-    public boolean isLate() {
+    public boolean isLate()
+    {
         return this.endDate.before(new Date());
     }
 

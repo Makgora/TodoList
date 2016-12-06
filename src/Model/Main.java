@@ -15,7 +15,7 @@ public class Main {
 
         System.out.println(TaskList.getTaskList());
 
-        TaskList.getTaskList().urgentSort();
+        TaskList.getTaskList().sortByEndDate();
 
         System.out.println(TaskList.getTaskList());
 

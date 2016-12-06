@@ -96,7 +96,7 @@ public class TaskList implements Serializable {
         }
     }
 
-    public void urgentSort()
+    public void sortByEndDate()
     {
         this.tasks.sort((task1, task2) -> {
             Date today = new Date();
