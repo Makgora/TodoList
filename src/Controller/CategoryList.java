@@ -15,6 +15,7 @@ public class CategoryList implements Serializable {
         if(!new File("CategoryList.ser").exists())
         {
             this.categories = new ArrayList<>();
+            categoryList = this;
         }
         else
         {
@@ -37,7 +38,7 @@ public class CategoryList implements Serializable {
     public void serialize() throws IOException
     {
         File file = new File("CategoryList.ser");
-        file.createNewFile();//Make a file if doesn't exist
+        file.createNewFile(); //Make a file if doesn't exist
 
         FileOutputStream fileOut = new FileOutputStream(file);
         ObjectOutputStream outStream = new ObjectOutputStream(fileOut);

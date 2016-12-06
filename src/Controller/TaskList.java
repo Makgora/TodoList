@@ -7,6 +7,8 @@ import Model.Task;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 
 public class TaskList implements Serializable {
 
@@ -92,6 +94,25 @@ public class TaskList implements Serializable {
                 task.setCategory("SansCategorie");
             }
         }
+    }
+
+    public void sortByEndDate()
+    {
+        this.tasks.sort((task1, task2) -> {
+            Date today = new Date();
+            if(task1.getEndDate().before(task2.getEndDate()))
+            {
+                return -1;
+            }
+            else if(task1.getEndDate().after(task2.getEndDate()))
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        });
     }
 
     public String toString()
