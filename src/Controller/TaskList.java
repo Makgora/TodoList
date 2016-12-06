@@ -15,18 +15,18 @@ public class TaskList implements Serializable {
 
     private TaskList()
     {
-        if(!new File("TaskList.ser").exists())  //File doesn't exist (first execution)
+        if(!new File("TaskList.ser").exists())  // File doesn't exist (first execution)
         {
             this.tasks = new ArrayList<>();
             taskList = this;
         }
-        else                //Deserialise taskList from file
+        else // Deserialise taskList from file
         {
             taskList = deserialize();
         }
     }
 
-    public static TaskList getTaskList()    //return the static object taskList or create one if first execution
+    public static TaskList getTaskList()    // return the static object taskList or create one if first execution
     {
         if(taskList == null)
         {

@@ -4,17 +4,19 @@ import Controller.CategoryList;
 import Controller.TaskList;
 import Model.Exception.CategoryException;
 import Model.Exception.TaskException;
-import org.jetbrains.annotations.Contract;
 
 import java.io.Serializable;
 
 public class Category implements Serializable {
 
     private String name;
+    private int id;
+    private static int currentID = 0;
 
     private Category(String name) throws CategoryException
     {
         this.setName(name);
+        this.id = currentID++;
         CategoryList.getCategoryList().addNewCategory(this);
     }
 
@@ -35,7 +37,6 @@ public class Category implements Serializable {
         }
     }
 
-    @Contract("null -> fail")
     public static Category create(String name) throws CategoryException
     {
         Category categoryToCreate = CategoryList.getCategoryList().getCategory(name);
@@ -64,8 +65,8 @@ public class Category implements Serializable {
             if(categoryToDelete == null)
             {
                 throw new CategoryException("La categorie n'existe pas");
-
-            } else
+            }
+            else
             {
                 TaskList.getTaskList().removeACategoryFromAllTask(categoryToDelete);
             }

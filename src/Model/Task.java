@@ -16,7 +16,7 @@ public abstract class Task implements Serializable {
     private Date endDate;
     private Category category;
 
-    public Task(String title, String beginDate, String endDate, String category) throws TaskException, CategoryException, ParseException
+    public Task(String title, Date beginDate, String endDate, Category category) throws TaskException, CategoryException, ParseException
     {
         this.setTitle(title);
         this.setBeginDate(beginDate);
@@ -62,19 +62,17 @@ public abstract class Task implements Serializable {
         }
     }
 
-    public void setBeginDate(String newBeginDate) throws TaskException, ParseException
+    public void setBeginDate(Date newBeginDate) throws TaskException, ParseException
     {
-        Date newBeginDateD = new SimpleDateFormat("dd/mm/yy").parse(newBeginDate);
-
         if(this.isAccomplished())
         {
             throw new TaskException("Task already accomplished");
         }
         else
         {
-            if (this.endDate == null || newBeginDateD.before(this.endDate))
+            if (this.endDate == null || newBeginDate.before(this.endDate))
             {
-                this.beginDate = newBeginDateD;
+                this.beginDate = newBeginDate;
             } 
             else
             {
@@ -104,7 +102,7 @@ public abstract class Task implements Serializable {
         }
     }
 
-    public void setCategory(String newCategory) throws CategoryException, TaskException
+    public void setCategory(Category newCategory) throws CategoryException, TaskException
     {
         if(this.isAccomplished())
         {
@@ -112,7 +110,7 @@ public abstract class Task implements Serializable {
         }
         else
         {
-            this.category = Category.create(newCategory);
+            this.category = newCategory;
         }
     }
 
