@@ -20,12 +20,12 @@ public class TaskList implements Serializable {
         if(!new File("TaskList.ser").exists())  // File doesn't exist (first execution)
         {
             this.tasks = new ArrayList<>();
-            taskList = this;
         }
         else // Deserialise taskList from file
         {
             taskList = deserialize();
         }
+        taskList = this;
     }
 
     public static TaskList getTaskList()    // return the static object taskList or create one if first execution
@@ -80,7 +80,7 @@ public class TaskList implements Serializable {
         this.tasks.add(newTask);
     }
 
-    public ArrayList getAllTasks()
+    public ArrayList<Task> getAllTasks()
     {
         return this.tasks;
     }
@@ -91,7 +91,7 @@ public class TaskList implements Serializable {
         {
             if(task.getCategory() == cat)
             {
-                task.setCategory("SansCategorie");
+                task.setCategory(null);
             }
         }
     }
@@ -99,7 +99,6 @@ public class TaskList implements Serializable {
     public void sortByEndDate()
     {
         this.tasks.sort((task1, task2) -> {
-            Date today = new Date();
             if(task1.getEndDate().before(task2.getEndDate()))
             {
                 return -1;

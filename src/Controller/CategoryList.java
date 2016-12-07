@@ -15,12 +15,12 @@ public class CategoryList implements Serializable {
         if(!new File("CategoryList.ser").exists())
         {
             this.categories = new ArrayList<>();
-            categoryList = this;
         }
         else
         {
             categoryList = deserialize();
         }
+        categoryList = this;
     }
 
     public static CategoryList getCategoryList()

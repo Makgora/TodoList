@@ -11,7 +11,7 @@ public class LongTask extends Task implements Serializable {
 
     private int advancement;
 
-    public LongTask(String title, String beginDate, String endDate, String category) throws TaskException, ParseException, CategoryException
+    public LongTask(String title, String beginDate, String endDate, Category category) throws TaskException, ParseException, CategoryException
     {
         super(title, beginDate, endDate, category);
         this.advancement = 0;
@@ -52,8 +52,19 @@ public class LongTask extends Task implements Serializable {
         return advancement >= 100;
     }
 
+    public int getAdvancement() {
+        return advancement;
+    }
+
     public void setAdvancement(int newAdvancement)
     {
         this.advancement = newAdvancement;
+    }
+
+    @Override
+    public String toString()
+    {
+        String isLate = this.isLate() ? ", est en retard" : ", n'est pas en retard";
+        return super.toString() + ", est en retard : " + this.isLate();
     }
 }

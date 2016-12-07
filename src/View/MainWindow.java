@@ -1,6 +1,7 @@
 package View;
 
 import Controller.TaskList;
+import Model.Task;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -45,16 +46,17 @@ public class MainWindow extends JPanel {
 
 		JButton editButton = new JButton("Editer la tâche");
 		editButton.addActionListener(e -> {
-            mainFrame.setContentPane(new CreateTaskView(mainFrame));
+		    Task task = (Task) taskJList.getSelectedValue();
+            mainFrame.setContentPane(new CreateTaskView(mainFrame, task));
             mainFrame.revalidate();
         });
 		editButton.setEnabled(false);
 		
 		JButton deleteButton = new JButton("Supprimer la tâche");
 		deleteButton.addActionListener(e -> {
-		    int index = taskJList.getSelectedIndex();
-		    taskJList.remove(index);
+            int index = taskJList.getSelectedIndex();
             tasks.getAllTasks().remove(index);
+            taskJList.setListData(tasks.getAllTasks().toArray());
         });
 		
 		deleteButton.setEnabled(false);
@@ -77,16 +79,16 @@ public class MainWindow extends JPanel {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
 
-		JButton createButton = new JButton("Trier par Date");
+		JButton createButton = new JButton("Trier par Date de fin");
 		createButton.addActionListener(e -> {
-            mainFrame.setContentPane(new CreateTaskView(mainFrame));
-            mainFrame.revalidate();
+			tasks.sortByEndDate();
+            taskJList.setListData(tasks.getAllTasks().toArray());
         });
 
 		JButton editButton = new JButton("Trier par ?");
 		editButton.addActionListener(e -> {
-            mainFrame.setContentPane(new CreateTaskView(mainFrame));
-            mainFrame.revalidate();
+            tasks.sortByEndDate();
+            taskJList.setListData(tasks.getAllTasks().toArray());
         });
 
         buttonPanel.add(createButton);

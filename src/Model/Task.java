@@ -15,8 +15,9 @@ public abstract class Task implements Serializable {
     private Date beginDate;
     private Date endDate;
     private Category category;
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/mm/yy");
 
-    public Task(String title, Date beginDate, String endDate, Category category) throws TaskException, CategoryException, ParseException
+    public Task(String title, String beginDate, String endDate, Category category) throws TaskException, CategoryException, ParseException
     {
         this.setTitle(title);
         this.setBeginDate(beginDate);
@@ -51,7 +52,7 @@ public abstract class Task implements Serializable {
         }
         else
         {
-            if (newTitle == null)
+            if (newTitle.equals(""))
             {
                 throw new TaskException("New title is null");
             }
@@ -62,18 +63,19 @@ public abstract class Task implements Serializable {
         }
     }
 
-    public void setBeginDate(Date newBeginDate) throws TaskException, ParseException
+    public void setBeginDate(String newBeginDate) throws TaskException, ParseException
     {
+        Date newBeginDateD = DATE_FORMAT.parse(newBeginDate);
         if(this.isAccomplished())
         {
             throw new TaskException("Task already accomplished");
         }
         else
         {
-            if (this.endDate == null || newBeginDate.before(this.endDate))
+            if (this.endDate == null || newBeginDateD.before(this.endDate))
             {
-                this.beginDate = newBeginDate;
-            } 
+                this.beginDate = newBeginDateD;
+            }
             else
             {
                 throw new TaskException("New BeginDate has to be before EndDate");
@@ -83,7 +85,7 @@ public abstract class Task implements Serializable {
     
     public void setEndDate(String newEndDate) throws TaskException, ParseException
     {
-        Date newEndDateD = new SimpleDateFormat("dd/mm/yy").parse(newEndDate);
+        Date newEndDateD = DATE_FORMAT.parse(newEndDate);
 
         if(this.isAccomplished())
         {
@@ -102,7 +104,7 @@ public abstract class Task implements Serializable {
         }
     }
 
-    public void setCategory(Category newCategory) throws CategoryException, TaskException
+    public void setCategory(Category newCategory) throws TaskException
     {
         if(this.isAccomplished())
         {
@@ -121,8 +123,11 @@ public abstract class Task implements Serializable {
 
     public abstract boolean isAccomplished();
 
+    @Override
     public String toString()
     {
-        return "Title: " + this.title + ", BeginDate: " + this.beginDate.toString() + ", EndDate: " + this.endDate.toString() + ", Category: " + this.category;
+        String endDate = DATE_FORMAT.format(getEndDate());
+        String isAcc = this.isAccomplished() ? ", est Terminée" : ", à terminer";
+        return this.title + isAcc + ", a finir pour " + endDate;
     }
 }

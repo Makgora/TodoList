@@ -5,11 +5,14 @@ import Controller.TaskList;
 import Model.Category;
 import Model.Exception.CategoryException;
 import Model.Exception.TaskException;
+import Model.LongTask;
 import Model.PunctualTask;
 import Model.Task;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,6 +23,8 @@ public class CreateTaskView extends JPanel {
 	private final Dimension dimension = new Dimension(500,50);
 	private JFrame mainFrame;
 	private Task task;
+    private final static String PUNCTUAL = "punctual";
+    private final static String LONG = "long";
 	
 	public CreateTaskView(JFrame mainFrame) {
 		this.categories = CategoryList.getCategoryList();
@@ -56,9 +61,8 @@ public class CreateTaskView extends JPanel {
 		punctualPanel.add(punctualLabel);
 		JCheckBox isPunctual = new JCheckBox();
 		punctualPanel.add(isPunctual);
-		add(punctualPanel);
-        if (task != null) {
-            isPunctual.setSelected(task instanceof PunctualTask);
+        if (task == null) {
+            add(punctualPanel);
         }
 		
 		JPanel categoryPanel = new JPanel();
@@ -72,21 +76,48 @@ public class CreateTaskView extends JPanel {
         if (task != null) {
             categoryList.setSelectedItem(task.getCategory());
         }
-		
-		JPanel datePanel = new JPanel();
-		datePanel.setLayout(new FlowLayout());
-		datePanel.setPreferredSize(dimension);
-		JLabel dateLabel = new JLabel("Date de fin (dd/mm/yy) :");
-		datePanel.add(dateLabel);
-        SimpleDateFormat format = new SimpleDateFormat("dd/mm/yy");
-		JFormattedTextField dateTextField = new JFormattedTextField(format);
-		dateTextField.setColumns(8);
-		datePanel.add(dateTextField);
-		add(datePanel);
+
+		JPanel beginDatePanel = new JPanel();
+        beginDatePanel.setLayout(new FlowLayout());
+        beginDatePanel.setPreferredSize(dimension);
+		JLabel beignDateLabel = new JLabel("Date de début (dd/mm/yy) :");
+        beginDatePanel.add(beignDateLabel);
+		JFormattedTextField beginDateTextField = new JFormattedTextField(Task.DATE_FORMAT);
+        beginDateTextField.setColumns(8);
+        beginDatePanel.add(beginDateTextField);
+		add(beginDatePanel);
         if (task != null) {
-            dateTextField.setText(format.format(task.getBeginDate()));
+            beginDateTextField.setText(Task.DATE_FORMAT.format(task.getBeginDate()));
+        } else {
+            beginDateTextField.setText(Task.DATE_FORMAT.format(new Date()));
         }
-		
+
+        JPanel endDatePanel = new JPanel();
+        endDatePanel.setLayout(new FlowLayout());
+        endDatePanel.setPreferredSize(dimension);
+        JLabel endDateLabel = new JLabel("Date de fin (dd/mm/yy) :");
+        endDatePanel.add(endDateLabel);
+        JFormattedTextField endDateTextField = new JFormattedTextField(Task.DATE_FORMAT);
+        endDateTextField.setColumns(8);
+        endDatePanel.add(endDateTextField);
+        add(endDatePanel);
+        if (task != null) {
+            endDateTextField.setText(Task.DATE_FORMAT.format(task.getEndDate()));
+        } else {
+            endDateTextField.setText(Task.DATE_FORMAT.format(new Date()));
+        }
+
+        JPanel donePanel = new JPanel();
+        donePanel.setLayout(new FlowLayout());
+        donePanel.setPreferredSize(dimension);
+        JLabel doneLabel = new JLabel("est Terminée ?");
+        donePanel.add(doneLabel);
+        JCheckBox isDone = new JCheckBox();
+        donePanel.add(isDone);
+        if (task != null && task instanceof PunctualTask) {
+            isDone.setSelected(task.isAccomplished());
+        }
+
 		JPanel progressPanel = new JPanel();
 		progressPanel.setLayout(new FlowLayout());
 		progressPanel.setPreferredSize(dimension);
@@ -99,10 +130,21 @@ public class CreateTaskView extends JPanel {
         progressBar.setMajorTickSpacing(25);
         progressBar.setLabelTable(progressBar.createStandardLabels(25));
         progressPanel.add(progressBar);
-		add(progressPanel);
-        if (task != null) { // TODO
-            //progressBar.setValue();
+        if (task != null && task instanceof LongTask) {
+            progressBar.setValue(((LongTask) task).getAdvancement());
         }
+
+        // Create the panel that contains either a checkbox or a slider
+        JPanel switcher = new JPanel(new CardLayout());
+        switcher.add(donePanel, PUNCTUAL);
+        switcher.add(progressPanel, LONG);
+        CardLayout cl = (CardLayout)(switcher.getLayout());
+        if (task != null && task instanceof PunctualTask) {
+            cl.show(switcher, PUNCTUAL);
+        } else {
+            cl.show(switcher, LONG);
+        }
+        add(switcher);
 		
 		JPanel confirmPanel = new JPanel();
 		confirmPanel.setLayout(new FlowLayout());
@@ -116,34 +158,49 @@ public class CreateTaskView extends JPanel {
             mainFrame.setContentPane(new MainWindow(mainFrame));
             mainFrame.revalidate();
         });
-		confirmButton.addActionListener(e -> {
-            mainFrame.setContentPane(new MainWindow(mainFrame));
-            mainFrame.revalidate();
-            Task task;
-            if (isPunctual.isSelected()) {
+
+		confirmButton.addActionListener((ActionEvent e) -> {
+			try {
                 String title = titleTextField.getText();
-                String endDate = dateTextField.getText();
+                String beginDate = beginDateTextField.getText();
+                String endDate = endDateTextField.getText();
                 Category category = (Category) categoryList.getSelectedItem();
-                try {
-                    task = new PunctualTask(title, new Date(), endDate, category);
-                    TaskList.getTaskList().addNewTask(task);
-                } catch (TaskException e1) {
-                    e1.printStackTrace();
-                } catch (ParseException e1) {
-                    e1.printStackTrace();
-                } catch (CategoryException e1) {
-                    e1.printStackTrace();
+
+                if (task != null) { // We modify the task
+                    task.setTitle(title);
+                    task.setBeginDate(beginDate);
+                    task.setEndDate(endDate);
+                    task.setCategory(category);
+                    if (task instanceof LongTask) {
+                        ((LongTask) task).setAdvancement(progressBar.getValue());
+                    }
+                    if (task instanceof LongTask) {
+                        ((PunctualTask) task).setAccomplished(isDone.isSelected());
+                    }
+                } else { // We create a new task
+                    if (isPunctual.isSelected()) {
+                        PunctualTask task = new PunctualTask(title, beginDate, endDate, category);
+                        task.setAccomplished(isDone.isSelected());
+                    } else {
+                        LongTask task = new LongTask(title, beginDate, endDate, category);
+                        task.setAdvancement(progressBar.getValue());
+                    }
                 }
-            } else { // TODO
 
+                mainFrame.setContentPane(new MainWindow(mainFrame));
+                mainFrame.revalidate();
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(mainFrame,
+                        exception.getMessage(),
+                        "One of the fields is invalid",
+                        JOptionPane.ERROR_MESSAGE);
             }
-
         });
 		isPunctual.addActionListener(e -> {
-            if(isPunctual.isSelected()) {
-                remove(progressPanel);
+            if (isPunctual.isSelected()) {
+                cl.show(switcher, PUNCTUAL);
             } else {
-                add(progressPanel);
+                cl.show(switcher, LONG);
             }
             mainFrame.repaint();
         });
