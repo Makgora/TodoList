@@ -6,6 +6,8 @@ import Model.Exception.TaskException;
 import Model.Task;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -17,13 +19,11 @@ public class TaskList implements Serializable {
 
     private TaskList()
     {
-        if(!new File("TaskList.ser").exists())  // File doesn't exist (first execution)
+        if(new File("TaskList.ser").exists())  // File doesn't exist (first execution)
         {
+            this.tasks = deserialize().getAllTasks();
+        } else {
             this.tasks = new ArrayList<>();
-        }
-        else // Deserialise taskList from file
-        {
-            taskList = deserialize();
         }
         taskList = this;
     }
@@ -46,11 +46,8 @@ public class TaskList implements Serializable {
         file.createNewFile(); //Make a file if doesn't exist
 
         FileOutputStream fileOut = new FileOutputStream(file);
-        ObjectOutputStream outStream = new ObjectOutputStream(fileOut);
-
-        outStream.writeObject(this);
-
-        outStream.close();
+        byte[] data = SerializeHelper.serialize(this).getBytes();
+        fileOut.write(data);
         fileOut.close();
     }
 
@@ -58,14 +55,14 @@ public class TaskList implements Serializable {
     {
         try
         {
-            FileInputStream fileIn = new FileInputStream(new File("TaskList.ser"));
-            ObjectInputStream inStream = new ObjectInputStream(fileIn);
+            String data = new String(Files.readAllBytes(Paths.get("TaskList.ser")));
+            TaskList taskList = (TaskList) SerializeHelper.deserialize(data);
 
-            TaskList taskList = (TaskList)inStream.readObject();
-
-            inStream.close();
-            fileIn.close();
-
+            // Set the deserialized category object
+            for (Task task : taskList.getAllTasks()) {
+                Category c = CategoryList.getCategoryList().getCategory(task.getCategory().getName());
+                task.setCategory(c);
+            }
             return taskList;
         }
         catch (Exception e)
@@ -85,7 +82,7 @@ public class TaskList implements Serializable {
         return this.tasks;
     }
 
-    public void removeACategoryFromAllTask(Category cat) throws CategoryException, TaskException
+    public void removeACategoryFromAllTask(Category cat) throws TaskException
     {
         for(Task task : this.tasks)
         {
@@ -114,13 +111,10 @@ public class TaskList implements Serializable {
         });
     }
 
-    public String toString()
-    {
-        String list = "Task List:";
-        for(Task task : getTaskList().tasks)
-        {
-            list = list + "\n" + task.toString();
-        }
-        return list;
+    @Override
+    public String toString() {
+        return "TaskList{" +
+                "tasks=" + tasks +
+                '}';
     }
 }

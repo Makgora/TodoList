@@ -1,5 +1,6 @@
 package View;
 
+import Controller.CategoryList;
 import Controller.TaskList;
 import Model.Task;
 
@@ -9,6 +10,9 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 public class MainWindow extends JPanel {
 
@@ -18,6 +22,7 @@ public class MainWindow extends JPanel {
 
     public MainWindow(JFrame mainFrame) {
         this.tasks = TaskList.getTaskList();
+		System.out.println(tasks);
 		this.mainFrame = mainFrame;
 		setLayout(new FlowLayout());
 		setupScrollList();
@@ -27,6 +32,7 @@ public class MainWindow extends JPanel {
 
     private void setupScrollList() {
 		taskJList = new JList<>(tasks.getAllTasks().toArray());
+		taskJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		taskJList.setFixedCellHeight(30);
 		JScrollPane taskListPanel = new JScrollPane(taskJList);
 		taskListPanel.setPreferredSize(new Dimension(500, 300));
@@ -100,7 +106,18 @@ public class MainWindow extends JPanel {
 	public static void main(String s[]) {
 		JFrame mainView = new JFrame("TodoList");
         mainView.setLocationRelativeTo(null);
-		mainView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainView.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    TaskList.getTaskList().serialize();
+                    CategoryList.getCategoryList().serialize();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
 		mainView.setContentPane(new MainWindow(mainView));
 		mainView.setSize(500, 500);
 		mainView.setVisible(true);

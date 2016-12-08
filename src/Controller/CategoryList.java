@@ -1,8 +1,14 @@
 package Controller;
 
 import Model.Category;
+import Model.Exception.CategoryException;
+import Model.Exception.TaskException;
+import Model.Task;
+import sun.misc.IOUtils;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class CategoryList implements Serializable {
@@ -12,13 +18,11 @@ public class CategoryList implements Serializable {
 
     private CategoryList()
     {
-        if(!new File("CategoryList.ser").exists())
+        if(new File("CategoryList.ser").exists())
         {
+            this.categories = deserialize().getAllCategories();
+        } else {
             this.categories = new ArrayList<>();
-        }
-        else
-        {
-            categoryList = deserialize();
         }
         categoryList = this;
     }
@@ -41,11 +45,8 @@ public class CategoryList implements Serializable {
         file.createNewFile(); //Make a file if doesn't exist
 
         FileOutputStream fileOut = new FileOutputStream(file);
-        ObjectOutputStream outStream = new ObjectOutputStream(fileOut);
-
-        outStream.writeObject(this);
-
-        outStream.close();
+        byte[] data = SerializeHelper.serialize(this).getBytes();
+        fileOut.write(data);
         fileOut.close();
     }
 
@@ -53,14 +54,8 @@ public class CategoryList implements Serializable {
     {
         try
         {
-            FileInputStream fileIn = new FileInputStream(new File("CategoryList.ser"));
-            ObjectInputStream inStream = new ObjectInputStream(fileIn);
-
-            CategoryList categoryList = (CategoryList)inStream.readObject();
-
-            inStream.close();
-            fileIn.close();
-
+            String data = new String(Files.readAllBytes(Paths.get("CategoryList.ser")));
+            CategoryList categoryList = (CategoryList) SerializeHelper.deserialize(data);
             return categoryList;
         }
         catch (Exception e)
@@ -70,9 +65,8 @@ public class CategoryList implements Serializable {
         }
     }
 
-    public Category getCategory(String name)
-    {
-        for(Category category : getCategoryList().categories)
+    public Category getCategory(String name) {
+        for(Category category : categories)
         {
             if(category.getName().equals(name))
             {
@@ -82,23 +76,18 @@ public class CategoryList implements Serializable {
         return null;
     }
 
+    public void removeCategory(int i) throws TaskException {
+        Category c = categories.get(i);
+        TaskList.getTaskList().removeACategoryFromAllTask(c);
+        categories.remove(i);
+    }
+
     public void addNewCategory(Category newCategory)
     {
         this.categories.add(newCategory);
     }
 
-    public ArrayList getAllCategories() {
+    public ArrayList<Category> getAllCategories() {
         return this.categories;
-    }
-
-    public String toString()
-    {
-        String list = "Category List:";
-        for(Category category : getCategoryList().categories)
-        {
-            list = list + "\n" + category.toString();
-        }
-
-        return list;
     }
 }

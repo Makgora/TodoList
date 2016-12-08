@@ -23,7 +23,6 @@ public abstract class Task implements Serializable {
         this.setBeginDate(beginDate);
         this.setEndDate(endDate);
         this.setCategory(category);
-        TaskList.getTaskList().addNewTask(this);
     }
 
     public String getTitle()
@@ -54,7 +53,7 @@ public abstract class Task implements Serializable {
         {
             if (newTitle.equals(""))
             {
-                throw new TaskException("New title is null");
+                throw new TaskException("New title is invalid");
             }
             else
             {
@@ -128,6 +127,6 @@ public abstract class Task implements Serializable {
     {
         String endDate = DATE_FORMAT.format(getEndDate());
         String isAcc = this.isAccomplished() ? ", est Terminée" : ", à terminer";
-        return this.title + isAcc + ", a finir pour " + endDate;
+        return this.title + isAcc + ", a finir pour " + endDate + ", " + this.category.getName();
     }
 }

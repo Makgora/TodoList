@@ -11,7 +11,7 @@ public class Category implements Serializable {
 
     private String name;
 
-    private Category(String name) throws CategoryException
+    public Category(String name) throws CategoryException
     {
         this.setName(name);
     }
@@ -25,7 +25,7 @@ public class Category implements Serializable {
     {
         if(newName.equals(""))
         {
-            throw new CategoryException("the new name is null");
+            throw new CategoryException("the new name is invalid");
         }
         else
         {

@@ -72,6 +72,8 @@ public class CreateTaskView extends JPanel {
 		categoryPanel.add(categoryLabel);
 		JComboBox categoryList = new JComboBox<>(categories.getAllCategories().toArray());
 		categoryPanel.add(categoryList);
+        JButton editCategory = new JButton("Modifier les categories");
+        categoryPanel.add(editCategory);
 		add(categoryPanel);
         if (task != null) {
             categoryList.setSelectedItem(task.getCategory());
@@ -154,6 +156,7 @@ public class CreateTaskView extends JPanel {
 		JButton confirmButton = new JButton("Confirmer");
 		confirmPanel.add(confirmButton);
 		add(confirmPanel);
+
 		undoButton.addActionListener(e -> {
             mainFrame.setContentPane(new MainWindow(mainFrame));
             mainFrame.revalidate();
@@ -181,9 +184,11 @@ public class CreateTaskView extends JPanel {
                     if (isPunctual.isSelected()) {
                         PunctualTask task = new PunctualTask(title, beginDate, endDate, category);
                         task.setAccomplished(isDone.isSelected());
+                        TaskList.getTaskList().addNewTask(task);
                     } else {
                         LongTask task = new LongTask(title, beginDate, endDate, category);
                         task.setAdvancement(progressBar.getValue());
+                        TaskList.getTaskList().addNewTask(task);
                     }
                 }
 
@@ -196,6 +201,12 @@ public class CreateTaskView extends JPanel {
                         JOptionPane.ERROR_MESSAGE);
             }
         });
+
+        editCategory.addActionListener(actionEvent -> {
+            mainFrame.setContentPane(new CreateCategoryView(mainFrame));
+            mainFrame.revalidate();
+        });
+
 		isPunctual.addActionListener(e -> {
             if (isPunctual.isSelected()) {
                 cl.show(switcher, PUNCTUAL);
