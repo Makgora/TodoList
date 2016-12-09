@@ -4,6 +4,7 @@ import Model.Exception.TaskException;
 
 import java.io.Serializable;
 import java.text.ParseException;
+import java.util.Date;
 
 public class PunctualTask extends Task implements Serializable {
 
@@ -22,6 +23,15 @@ public class PunctualTask extends Task implements Serializable {
     {
         super(title, beginDate, endDate, category);
         this.isAccomplished = false;
+    }
+
+    /**
+     * Getter
+     * @return whether the task is late or not
+     */
+    public boolean isLate()
+    {
+        return new Date().after(this.getEndDate());
     }
 
     /**

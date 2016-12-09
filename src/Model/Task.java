@@ -165,6 +165,11 @@ public abstract class Task implements Serializable {
      */
     public abstract boolean isAccomplished();
 
+    /**
+     * @return whether the task is late or not
+     */
+    public abstract boolean isLate();
+
     @Override
     public String toString()
     {
