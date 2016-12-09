@@ -88,6 +88,6 @@ public class LongTask extends Task implements Serializable {
     public String toString()
     {
         String isLate = this.isLate() ? ", est en retard" : ", n'est pas en retard";
-        return super.toString() + ", est en retard : " + this.isLate();
+        return super.toString() + isLate;
     }
 }
