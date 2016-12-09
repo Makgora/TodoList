@@ -1,7 +1,6 @@
 package View;
 
 import Controller.CategoryList;
-import Controller.TaskList;
 import Model.Category;
 import Model.Exception.CategoryException;
 import Model.Exception.TaskException;

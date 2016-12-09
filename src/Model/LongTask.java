@@ -1,6 +1,5 @@
 package Model;
 
-import Model.Exception.CategoryException;
 import Model.Exception.TaskException;
 
 import java.io.Serializable;
@@ -11,13 +10,25 @@ public class LongTask extends Task implements Serializable {
 
     private int advancement;
 
-    public LongTask(String title, String beginDate, String endDate, Category category) throws TaskException, ParseException, CategoryException
+    /**
+     * Constructor
+     * @param title, the title of the task
+     * @param beginDate, the begin date of the task
+     * @param endDate, the date the task should be done for
+     * @param category, the category related to this task
+     * @throws TaskException, can be throw if the task is already accomplished, or if some invalid value are passed
+     * @throws ParseException, can be throw if the date are invalid
+     */
+    public LongTask(String title, String beginDate, String endDate, Category category) throws TaskException, ParseException
     {
         super(title, beginDate, endDate, category);
         this.advancement = 0;
     }
 
-    @Override
+    /**
+     * Getter
+     * @return whether the task is late or not
+     */
     public boolean isLate()
     {
         long timeBetweenBeginAndEnd = this.getEndDate().getTime() - this.getBeginDate().getTime();
@@ -46,16 +57,28 @@ public class LongTask extends Task implements Serializable {
         }
     }
 
+    /**
+     * Getter
+     * @return whether the task is accomplished or not
+     */
     @Override
     public boolean isAccomplished()
     {
         return advancement >= 100;
     }
 
+    /**
+     * Getter
+     * @return the advancement of the task
+     */
     public int getAdvancement() {
         return advancement;
     }
 
+    /**
+     * Setter
+     * @param newAdvancement, the new advancement
+     */
     public void setAdvancement(int newAdvancement)
     {
         this.advancement = newAdvancement;

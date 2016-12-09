@@ -3,8 +3,6 @@ package View;
 import Controller.CategoryList;
 import Controller.TaskList;
 import Model.Category;
-import Model.Exception.CategoryException;
-import Model.Exception.TaskException;
 import Model.LongTask;
 import Model.PunctualTask;
 import Model.Task;
@@ -12,9 +10,6 @@ import Model.Task;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CreateTaskView extends JPanel {

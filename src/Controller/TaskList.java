@@ -1,22 +1,26 @@
 package Controller;
 
 import Model.Category;
-import Model.Exception.CategoryException;
 import Model.Exception.TaskException;
 import Model.Task;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
 
 public class TaskList implements Serializable {
 
     private ArrayList<Task> tasks;
     private static TaskList taskList;
 
+    /**
+     * Constructor
+     * Deserialize from the file TaskList.ser if it exist
+     */
     private TaskList()
     {
         if(new File("TaskList.ser").exists())  // File doesn't exist (first execution)
@@ -28,6 +32,10 @@ public class TaskList implements Serializable {
         taskList = this;
     }
 
+    /**
+     * Getter
+     * @return the current instance of TaskList so that they are all in sync
+     */
     public static TaskList getTaskList()    // return the static object taskList or create one if first execution
     {
         if(taskList == null)
@@ -40,6 +48,10 @@ public class TaskList implements Serializable {
         }
     }
 
+    /**
+     * Serialize the current instance of TaskList
+     * @throws IOException, related to file manipulation
+     */
     public void serialize() throws IOException
     {
         File file = new File("TaskList.ser");
@@ -51,6 +63,10 @@ public class TaskList implements Serializable {
         fileOut.close();
     }
 
+    /**
+     * Deserialize the TaskList instance from TaskList.ser
+     * @return TaskList saved from a previous session
+     */
     private static TaskList deserialize()
     {
         try
@@ -72,16 +88,30 @@ public class TaskList implements Serializable {
         }
     }
 
+    /**
+     * Add a new Task
+     * @param newTask, the new task
+     */
     public void addNewTask(Task newTask)
     {
         this.tasks.add(newTask);
     }
 
+    /**
+     * Getter
+     * @return al the current tasks
+     */
     public ArrayList<Task> getAllTasks()
     {
         return this.tasks;
     }
 
+    /**
+     * Remove the category from all the task it is in.
+     * Set the category of thos task to null
+     * @param cat, the category we should remove
+     * @throws TaskException, cannot happen
+     */
     public void removeACategoryFromAllTask(Category cat) throws TaskException
     {
         for(Task task : this.tasks)
@@ -93,6 +123,9 @@ public class TaskList implements Serializable {
         }
     }
 
+    /**
+     * Allow to sort the task by End Date
+     */
     public void sortByEndDate()
     {
         this.tasks.sort((task1, task2) -> {

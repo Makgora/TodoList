@@ -1,7 +1,5 @@
 package Model;
 
-import Controller.TaskList;
-import Model.Exception.CategoryException;
 import Model.Exception.TaskException;
 
 import java.io.Serializable;
@@ -17,7 +15,16 @@ public abstract class Task implements Serializable {
     private Category category;
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/mm/yy");
 
-    public Task(String title, String beginDate, String endDate, Category category) throws TaskException, CategoryException, ParseException
+    /**
+     * Constructor
+     * @param title, the title of the task
+     * @param beginDate, the begin date of the task
+     * @param endDate, the date the task should be done for
+     * @param category, the category related to this task
+     * @throws TaskException, can be throw if the task is already accomplished, or if some invalid value are passed
+     * @throws ParseException, can be throw if the date are invalid
+     */
+    public Task(String title, String beginDate, String endDate, Category category) throws TaskException, ParseException
     {
         this.setTitle(title);
         this.setBeginDate(beginDate);
@@ -25,24 +32,45 @@ public abstract class Task implements Serializable {
         this.setCategory(category);
     }
 
+    /**
+     * Getter
+     * @return the title
+     */
     public String getTitle()
     {
         return this.title;
     }
 
+    /**
+     * Getter
+     * @return the begin date
+     */
     public Date getBeginDate() {
         return this.beginDate;
     }
 
+    /**
+     * Getter
+     * @return the end date
+     */
     public Date getEndDate() {
         return this.endDate;
     }
 
+    /**
+     * Getter
+     * @return the category
+     */
     public Category getCategory()
     {
         return this.category;
     }
 
+    /**
+     * Setter
+     * @param newTitle, the new title of the task
+     * @throws TaskException, if the new title is an empty string
+     */
     public void setTitle(String newTitle) throws TaskException
     {
         if(this.isAccomplished())
@@ -62,6 +90,12 @@ public abstract class Task implements Serializable {
         }
     }
 
+    /**
+     * Setter
+     * @param newBeginDate, the new begin date
+     * @throws TaskException, if the task is already accomplished or the begin date is after end date
+     * @throws ParseException, if the date is invalid
+     */
     public void setBeginDate(String newBeginDate) throws TaskException, ParseException
     {
         Date newBeginDateD = DATE_FORMAT.parse(newBeginDate);
@@ -81,7 +115,13 @@ public abstract class Task implements Serializable {
             }
         }
     }
-    
+
+    /**
+     * Setter
+     * @param newEndDate, the new end date
+     * @throws TaskException, if the task is already accomplished or the end date is before the begin date
+     * @throws ParseException, if the date is invalid
+     */
     public void setEndDate(String newEndDate) throws TaskException, ParseException
     {
         Date newEndDateD = DATE_FORMAT.parse(newEndDate);
@@ -98,11 +138,16 @@ public abstract class Task implements Serializable {
             }
             else
             {
-                throw new TaskException("La nouvelle date de fin de la tache est anterieure à sa date de debut");
+                throw new TaskException("New EndDate has to be after BeginDate");
             }
         }
     }
 
+    /**
+     * Setter
+     * @param newCategory, the new category
+     * @throws TaskException
+     */
     public void setCategory(Category newCategory) throws TaskException
     {
         if(this.isAccomplished())
@@ -115,11 +160,9 @@ public abstract class Task implements Serializable {
         }
     }
 
-    public boolean isLate()
-    {
-        return this.endDate.before(new Date());
-    }
-
+    /**
+     * @return whether the task is accomplished or not
+     */
     public abstract boolean isAccomplished();
 
     @Override
