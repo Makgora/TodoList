@@ -20,6 +20,7 @@ public class MainWindow extends JPanel {
         this.tasks = TaskList.getTaskList();
 		System.out.println(tasks);
 		this.mainFrame = mainFrame;
+		this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new FlowLayout());
 		setupScrollList();
 		setupTaskButtonPanel();
