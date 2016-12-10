@@ -26,7 +26,7 @@ public class CreateCategoryView extends JPanel {
     }
 
     private void setupScrollList() {
-        categoryJList = new JList<>(categories.getAllCategories().toArray());
+        categoryJList = new JList<>(categories.getCategories().toArray());
         categoryJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         categoryJList.setFixedCellHeight(30);
         JScrollPane taskListPanel = new JScrollPane(categoryJList);
@@ -76,7 +76,7 @@ public class CreateCategoryView extends JPanel {
             try {
                 int index = categoryJList.getSelectedIndex();
                 categories.removeCategory(index);
-                categoryJList.setListData(categories.getAllCategories().toArray());
+                categoryJList.setListData(categories.getCategories().toArray());
             } catch (TaskException e1) {
                 JOptionPane.showMessageDialog(mainFrame,
                         e1.getMessage(),
@@ -90,7 +90,7 @@ public class CreateCategoryView extends JPanel {
                 boolean selected = !categoryJList.isSelectionEmpty();
                 if (selected) {
                     int index = categoryJList.getSelectedIndex();
-                    Category category = categories.getAllCategories().get(index);
+                    Category category = categories.getCategories().get(index);
                     addButton.setText("Modify");
                     titleTextField.setText(category.getName());
                 } else {
@@ -103,15 +103,24 @@ public class CreateCategoryView extends JPanel {
         addButton.addActionListener(actionEvent -> {
             try {
                 boolean selected = !categoryJList.isSelectionEmpty();
-                if (selected) {
-                    int index = categoryJList.getSelectedIndex();
-                    Category category = categories.getAllCategories().get(index);
-                    category.setName(titleTextField.getText());
-                } else {
-                    Category c = new Category(titleTextField.getText());
-                    categories.addNewCategory(c);
+                if(CategoryList.getCategoryList().indexOfName(titleTextField.getText()) != - 1)
+                {
+                    JOptionPane.showMessageDialog(mainFrame,
+                            "Category already exist",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
                 }
-                categoryJList.setListData(categories.getAllCategories().toArray());
+                else if(selected)
+                {
+                    int index = categoryJList.getSelectedIndex();
+                    Category category = categories.getCategories().get(index);
+                    category.setName(titleTextField.getText());
+                }
+                else
+                {
+                    Category.createCategory(titleTextField.getText());
+                }
+                categoryJList.setListData(categories.getCategories().toArray());
             } catch (CategoryException e) {
                 JOptionPane.showMessageDialog(mainFrame,
                         e.getMessage(),

@@ -27,7 +27,7 @@ public class CategoryList implements Serializable {
     {
         if(new File("CategoryList.ser").exists())
         {
-            this.categories = deserialize().getAllCategories();
+            this.categories = deserialize().getCategories();
         } else {
             this.categories = new ArrayList<>();
         }
@@ -120,11 +120,22 @@ public class CategoryList implements Serializable {
         this.categories.add(newCategory);
     }
 
+    public int indexOfName(String name)
+    {
+        for(Category category : this.categories)
+        {
+            if(category.getName().equals(name))
+            {
+                return this.categories.indexOf(category);
+            }
+        }
+        return -1;
+    }
     /**
      * Getter
      * @return all the current categories
      */
-    public ArrayList<Category> getAllCategories() {
+    public ArrayList<Category> getCategories() {
         return this.categories;
     }
 }

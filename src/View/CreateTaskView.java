@@ -65,7 +65,7 @@ public class CreateTaskView extends JPanel {
 		categoryPanel.setPreferredSize(dimension);
 		JLabel categoryLabel = new JLabel("Category :");
 		categoryPanel.add(categoryLabel);
-		JComboBox categoryList = new JComboBox<>(categories.getAllCategories().toArray());
+		JComboBox categoryList = new JComboBox<>(categories.getCategories().toArray());
 		categoryPanel.add(categoryList);
         JButton editCategory = new JButton("Modify categories");
         categoryPanel.add(editCategory);
