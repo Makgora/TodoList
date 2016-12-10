@@ -20,7 +20,6 @@ public class MainWindow extends JPanel {
         this.tasks = TaskList.getTaskList();
 		System.out.println(tasks);
 		this.mainFrame = mainFrame;
-		this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new FlowLayout());
 		setupScrollList();
 		setupTaskButtonPanel();
@@ -112,6 +111,7 @@ public class MainWindow extends JPanel {
 	public static void main(String s[]) {
 		JFrame mainView = new JFrame("TodoList");
         mainView.setLocationRelativeTo(null);
+
 		mainView.addWindowListener(new WindowAdapter() {
 
             @Override
@@ -119,6 +119,7 @@ public class MainWindow extends JPanel {
                 try {
                     TaskList.getTaskList().serialize();
                     CategoryList.getCategoryList().serialize();
+
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -128,7 +129,7 @@ public class MainWindow extends JPanel {
 		mainView.setSize(500, 500);
 		mainView.setVisible(true);
 		mainView.setResizable(false);
-
+		mainView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
 }
