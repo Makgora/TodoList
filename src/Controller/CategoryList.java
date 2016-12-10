@@ -75,8 +75,7 @@ public class CategoryList implements Serializable {
         try
         {
             String data = new String(Files.readAllBytes(Paths.get("CategoryList.ser")));
-            CategoryList categoryList = (CategoryList) SerializeHelper.deserialize(data);
-            return categoryList;
+            return (CategoryList) SerializeHelper.deserialize(data);
         }
         catch (Exception e)
         {

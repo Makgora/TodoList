@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.CategoryList;
 import Model.Exception.CategoryException;
 
 import java.io.Serializable;

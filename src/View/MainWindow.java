@@ -40,13 +40,13 @@ public class MainWindow extends JPanel {
   		JPanel buttonPanel = new JPanel();
   		buttonPanel.setLayout(new FlowLayout());
   		
-		JButton createButton = new JButton("Créer une tâche");
+		JButton createButton = new JButton("New task");
 		createButton.addActionListener(e -> {
             mainFrame.setContentPane(new CreateTaskView(mainFrame));
             mainFrame.revalidate();
         });
 
-		JButton editButton = new JButton("Editer la tâche");
+		JButton editButton = new JButton("Edit task");
 		editButton.addActionListener(e -> {
 		    Task task = (Task) taskJList.getSelectedValue();
             mainFrame.setContentPane(new CreateTaskView(mainFrame, task));
@@ -54,7 +54,7 @@ public class MainWindow extends JPanel {
         });
 		editButton.setEnabled(false);
 		
-		JButton deleteButton = new JButton("Supprimer la tâche");
+		JButton deleteButton = new JButton("Delete task");
 		deleteButton.addActionListener(e -> {
             int index = taskJList.getSelectedIndex();
             tasks.getAllTasks().remove(index);
@@ -81,20 +81,29 @@ public class MainWindow extends JPanel {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
 
-		JButton createButton = new JButton("Trier par Date de fin");
-		createButton.addActionListener(e -> {
+		JButton sort1Button = new JButton("Sort by end date");
+		sort1Button.addActionListener(e -> {
 			tasks.sortByEndDate();
             taskJList.setListData(tasks.getAllTasks().toArray());
         });
 
-		JButton editButton = new JButton("Trier par ?");
-		editButton.addActionListener(e -> {
+		JButton sort2Button = new JButton("Sort by ?");
+		sort2Button.addActionListener(e -> {
+			//TODO Replace .sortByEndDate() by the second sort
             tasks.sortByEndDate();
             taskJList.setListData(tasks.getAllTasks().toArray());
         });
 
-        buttonPanel.add(createButton);
-        buttonPanel.add(editButton);
+		JButton sort3Button = new JButton("Sort by ?");
+		sort3Button.addActionListener(e -> {
+			//TODO Replace .sortByEndDate() by the third sort
+			tasks.sortByEndDate();
+			taskJList.setListData(tasks.getAllTasks().toArray());
+		});
+
+        buttonPanel.add(sort1Button);
+        buttonPanel.add(sort2Button);
+		buttonPanel.add(sort3Button);
         add(buttonPanel);
 	}
 	

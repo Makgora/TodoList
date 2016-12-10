@@ -132,7 +132,7 @@ public abstract class Task implements Serializable {
         }
         else
         {
-            if (this.endDate == null || newEndDateD.after(this.beginDate))
+            if (this.beginDate == null || newEndDateD.after(this.beginDate))
             {
                 this.endDate = newEndDateD;
             }

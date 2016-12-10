@@ -40,7 +40,7 @@ public class CreateTaskView extends JPanel {
 		JPanel titlePanel = new JPanel();
 		titlePanel.setLayout(new FlowLayout());
 		titlePanel.setPreferredSize(dimension);
-		JLabel titleLabel = new JLabel("Nom de la tache :");
+		JLabel titleLabel = new JLabel("Task name :");
 		titlePanel.add(titleLabel);
 		JTextField titleTextField = new JTextField(20);
 		titlePanel.add(titleTextField);
@@ -52,7 +52,7 @@ public class CreateTaskView extends JPanel {
 		JPanel punctualPanel = new JPanel();
 		punctualPanel.setLayout(new FlowLayout());
 		punctualPanel.setPreferredSize(dimension);
-		JLabel punctualLabel = new JLabel("Tache ponctuelle ?");
+		JLabel punctualLabel = new JLabel("Punctual task ?");
 		punctualPanel.add(punctualLabel);
 		JCheckBox isPunctual = new JCheckBox();
 		punctualPanel.add(isPunctual);
@@ -63,11 +63,11 @@ public class CreateTaskView extends JPanel {
 		JPanel categoryPanel = new JPanel();
 		categoryPanel.setLayout(new FlowLayout());
 		categoryPanel.setPreferredSize(dimension);
-		JLabel categoryLabel = new JLabel("Categorie :");
+		JLabel categoryLabel = new JLabel("Category :");
 		categoryPanel.add(categoryLabel);
 		JComboBox categoryList = new JComboBox<>(categories.getAllCategories().toArray());
 		categoryPanel.add(categoryList);
-        JButton editCategory = new JButton("Modifier les categories");
+        JButton editCategory = new JButton("Modify categories");
         categoryPanel.add(editCategory);
 		add(categoryPanel);
         if (task != null) {
@@ -77,7 +77,7 @@ public class CreateTaskView extends JPanel {
 		JPanel beginDatePanel = new JPanel();
         beginDatePanel.setLayout(new FlowLayout());
         beginDatePanel.setPreferredSize(dimension);
-		JLabel beignDateLabel = new JLabel("Date de début (dd/mm/yy) :");
+		JLabel beignDateLabel = new JLabel("Begin date (dd/mm/yy) :");
         beginDatePanel.add(beignDateLabel);
 		JFormattedTextField beginDateTextField = new JFormattedTextField(Task.DATE_FORMAT);
         beginDateTextField.setColumns(8);
@@ -92,7 +92,7 @@ public class CreateTaskView extends JPanel {
         JPanel endDatePanel = new JPanel();
         endDatePanel.setLayout(new FlowLayout());
         endDatePanel.setPreferredSize(dimension);
-        JLabel endDateLabel = new JLabel("Date de fin (dd/mm/yy) :");
+        JLabel endDateLabel = new JLabel("End date (dd/mm/yy) :");
         endDatePanel.add(endDateLabel);
         JFormattedTextField endDateTextField = new JFormattedTextField(Task.DATE_FORMAT);
         endDateTextField.setColumns(8);
@@ -107,7 +107,7 @@ public class CreateTaskView extends JPanel {
         JPanel donePanel = new JPanel();
         donePanel.setLayout(new FlowLayout());
         donePanel.setPreferredSize(dimension);
-        JLabel doneLabel = new JLabel("est Terminée ?");
+        JLabel doneLabel = new JLabel("is accomplished ?");
         donePanel.add(doneLabel);
         JCheckBox isDone = new JCheckBox();
         donePanel.add(isDone);
@@ -118,7 +118,7 @@ public class CreateTaskView extends JPanel {
 		JPanel progressPanel = new JPanel();
 		progressPanel.setLayout(new FlowLayout());
 		progressPanel.setPreferredSize(dimension);
-		JLabel progresLabel = new JLabel("Progression :");
+		JLabel progresLabel = new JLabel("Advencement :");
 		progressPanel.add(progresLabel);
         JSlider progressBar = new  JSlider(JSlider.HORIZONTAL, 0, 100, 0);
         progressBar.setPaintTicks(true);
@@ -146,9 +146,9 @@ public class CreateTaskView extends JPanel {
 		JPanel confirmPanel = new JPanel();
 		confirmPanel.setLayout(new FlowLayout());
 		confirmPanel.setPreferredSize(dimension);
-		JButton undoButton = new JButton("Annuler");
+		JButton undoButton = new JButton("Cancel");
 		confirmPanel.add(undoButton);
-		JButton confirmButton = new JButton("Confirmer");
+		JButton confirmButton = new JButton("Confirm");
 		confirmPanel.add(confirmButton);
 		add(confirmPanel);
 

@@ -108,7 +108,7 @@ public class TaskList implements Serializable {
 
     /**
      * Remove the category from all the task it is in.
-     * Set the category of thos task to null
+     * Set the category of those task to null
      * @param cat, the category we should remove
      * @throws TaskException, cannot happen
      */

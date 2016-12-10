@@ -39,27 +39,27 @@ public class CreateCategoryView extends JPanel {
         JPanel categoryPanel = new JPanel();
         categoryPanel.setLayout(new FlowLayout());
         categoryPanel.setPreferredSize(dimension);
-        JLabel titleLabel = new JLabel("Nom de la Categorie :");
+        JLabel titleLabel = new JLabel("Category name :");
         categoryPanel.add(titleLabel);
         JTextField titleTextField = new JTextField(20);
         categoryPanel.add(titleTextField);
-        JButton addButton = new JButton("Ajouter");
+        JButton addButton = new JButton("Add");
         categoryPanel.add(addButton);
         add(categoryPanel);
 
         JPanel optionPanel = new JPanel();
         optionPanel.setLayout(new FlowLayout());
         optionPanel.setPreferredSize(dimension);
-        JButton clearSelectionButton = new JButton("Reinitialiser la sélection");
+        JButton clearSelectionButton = new JButton("Clean selection");
         optionPanel.add(clearSelectionButton);
-        JButton deleteButton = new JButton("Supprimer la Categorie");
+        JButton deleteButton = new JButton("Delete category");
         optionPanel.add(deleteButton);
         add(optionPanel);
 
         JPanel confirmPanel = new JPanel();
         confirmPanel.setLayout(new FlowLayout());
         confirmPanel.setPreferredSize(dimension);
-        JButton confirmButton = new JButton("Retour");
+        JButton confirmButton = new JButton("Back");
         confirmPanel.add(confirmButton);
         add(confirmPanel);
 
@@ -91,10 +91,10 @@ public class CreateCategoryView extends JPanel {
                 if (selected) {
                     int index = categoryJList.getSelectedIndex();
                     Category category = categories.getAllCategories().get(index);
-                    addButton.setText("Modifier");
+                    addButton.setText("Modify");
                     titleTextField.setText(category.getName());
                 } else {
-                    addButton.setText("Ajouter");
+                    addButton.setText("Add");
                     titleTextField.setText("");
                 }
             }
