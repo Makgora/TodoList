@@ -41,19 +41,39 @@ public class LongTask extends Task implements Serializable {
         }
         else if (timeElapsed < 0.5)
         {
-            return advancement >= 25;
+            return this.advancement >= 25;
         }
         else if (timeElapsed < 0.75)
         {
-            return advancement >= 50;
+            return this.advancement >= 50;
         }
         else if (timeElapsed < 1)
         {
-            return advancement >= 75;
+            return this.advancement >= 75;
         }
         else //(timeElapsed == 1)
         {
-            return advancement >= 100;
+            return this.advancement >= 100;
+        }
+    }
+
+    public int nextQuartToDo()
+    {
+        if(this.advancement < 25)
+        {
+            return 25;
+        }
+        else if(this.advancement < 50)
+        {
+            return 50;
+        }
+        else if(this.advancement < 75)
+        {
+            return 75;
+        }
+        else
+        {
+            return 100;
         }
     }
 

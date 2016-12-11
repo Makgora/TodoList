@@ -148,24 +148,21 @@ public class TaskList implements Serializable {
             Date interDeadLT2 = task2.getEndDate();
 
             long todayDateTime = new Date().getTime();
-            long nextQuartPercent;
+            double nextQuartPercent;
             long betweenBeginAndEndTime;
-
 
             if(task1 instanceof LongTask)
             {
-                nextQuartPercent = nextQuartToDo(((LongTask)task1).getAdvancement())/100;
-                betweenBeginAndEndTime = task1.getBeginDate().getTime() - task1.getEndDate().getTime();
-                interDeadLT1 = new Date(todayDateTime + nextQuartPercent*betweenBeginAndEndTime);
+                nextQuartPercent = ((LongTask)task1).nextQuartToDo()/100.0;
+                betweenBeginAndEndTime = task1.getEndDate().getTime() - task1.getBeginDate().getTime();
+                interDeadLT1 = new Date((long)(todayDateTime + nextQuartPercent*betweenBeginAndEndTime));
             }
             if(task2 instanceof LongTask)
             {
-                nextQuartPercent = nextQuartToDo(((LongTask)task2).getAdvancement())/100;
-                betweenBeginAndEndTime = task2.getBeginDate().getTime() - task2.getEndDate().getTime();
-                interDeadLT1 = new Date(todayDateTime + nextQuartPercent*betweenBeginAndEndTime);
+                nextQuartPercent = ((LongTask)task2).nextQuartToDo()/100.0;
+                betweenBeginAndEndTime = task2.getEndDate().getTime() - task2.getBeginDate().getTime();
+                interDeadLT2 = new Date((long)(todayDateTime + nextQuartPercent*betweenBeginAndEndTime));
             }
-
-            System.out.println("Comparaison entre " + Task.DATE_FORMAT.format(interDeadLT1)  + " et " + Task.DATE_FORMAT.format(interDeadLT2));
 
             if(interDeadLT1.before(interDeadLT2))
             {
@@ -180,27 +177,6 @@ public class TaskList implements Serializable {
                 return 0;
             }
         });
-
-    }
-
-    public static int nextQuartToDo(int advancement)
-    {
-        if(advancement >= 0 && advancement < 25)
-        {
-            return 25;
-        }
-        else if(advancement < 50)
-        {
-            return 50;
-        }
-        else if(advancement < 75)
-        {
-            return 75;
-        }
-        else
-        {
-            return 100;
-        }
     }
 
     public void sortByTrouverUnNom()
