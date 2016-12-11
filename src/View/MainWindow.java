@@ -87,10 +87,9 @@ public class MainWindow extends JPanel {
             taskJList.setListData(tasks.getAllTasks().toArray());
         });
 
-		JButton sort2Button = new JButton("Sort by ?");
+		JButton sort2Button = new JButton("Sort by intermediary deadlines");
 		sort2Button.addActionListener(e -> {
-			//TODO Replace .sortByEndDate() by the second sort
-            tasks.sortByEndDate();
+            tasks.sortByIntermediaryDeadlines();
             taskJList.setListData(tasks.getAllTasks().toArray());
         });
 

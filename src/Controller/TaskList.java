@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Category;
 import Model.Exception.TaskException;
+import Model.LongTask;
 import Model.Task;
 
 import java.io.File;
@@ -142,6 +143,25 @@ public class TaskList implements Serializable {
                 return 0;
             }
         });
+    }
+
+    public void sortByIntermediaryDeadlines()
+    {
+        System.out.println(LongTask.class.getName());
+        this.tasks.sort((task1, task2) -> {
+            if(task1.instanceof(LongTask) && task2.getClass().getName().equals("Model.LongTask"))
+            {
+
+            }
+        });
+    }
+
+
+    public void sortByTrouverUnNom()
+    {
+        //this.tasks.sort((task1, task2) -> {
+            //TODO
+        //});
     }
 
     @Override
