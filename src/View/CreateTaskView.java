@@ -101,7 +101,7 @@ public class CreateTaskView extends JPanel {
         if (task != null) {
             endDateTextField.setText(Task.DATE_FORMAT.format(task.getEndDate()));
         } else {
-            endDateTextField.setText(Task.DATE_FORMAT.format(new Date()));
+            endDateTextField.setText(Task.DATE_FORMAT.format( new Date(new Date().getTime() + Task.MILLISECONDS_PER_DAY)));
         }
 
         JPanel donePanel = new JPanel();
