@@ -120,16 +120,20 @@ public class CategoryList implements Serializable {
         this.categories.add(newCategory);
     }
 
-    public int indexOfName(String name)
+    /**
+     * @param name, the name to check
+     * @return if the name already exist
+     */
+    public boolean exists(String name)
     {
         for(Category category : this.categories)
         {
             if(category.getName().equals(name))
             {
-                return this.categories.indexOf(category);
+                return true;
             }
         }
-        return -1;
+        return false;
     }
     /**
      * Getter

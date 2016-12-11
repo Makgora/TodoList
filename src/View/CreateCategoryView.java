@@ -97,20 +97,19 @@ public class CreateCategoryView extends JPanel {
                     addButton.setText("Add");
                     titleTextField.setText("");
                 }
+
+                clearSelectionButton.setEnabled(selected);
+                deleteButton.setEnabled(selected);
             }
         });
+
+        clearSelectionButton.setEnabled(false);
+        deleteButton.setEnabled(false);
 
         addButton.addActionListener(actionEvent -> {
             try {
                 boolean selected = !categoryJList.isSelectionEmpty();
-                if(CategoryList.getCategoryList().indexOfName(titleTextField.getText()) != - 1)
-                {
-                    JOptionPane.showMessageDialog(mainFrame,
-                            "Category already exist",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-                else if(selected)
+                if(selected)
                 {
                     int index = categoryJList.getSelectedIndex();
                     Category category = categories.getCategories().get(index);
@@ -118,7 +117,8 @@ public class CreateCategoryView extends JPanel {
                 }
                 else
                 {
-                    Category.createCategory(titleTextField.getText());
+                    Category newCat = new Category(titleTextField.getText());
+                    categories.addNewCategory(newCat);
                 }
                 categoryJList.setListData(categories.getCategories().toArray());
             } catch (CategoryException e) {
