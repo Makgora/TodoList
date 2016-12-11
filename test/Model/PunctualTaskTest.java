@@ -1,19 +1,30 @@
+package Model;
+
 import org.testng.Reporter;
 import org.testng.annotations.*;
 
-import java.text.SimpleDateFormat;
-import java.text.StringCharacterIterator;
+import java.util.Date;
 
 import static org.testng.Assert.*;
 
+/**
+ * Created by fly on 12/11/16.
+ */
+public class PunctualTaskTest {
 
-public abstract class MainTest {
+    private PunctualTask t;
+    private final String title = "title";
+    private final Date now = new Date();
+    private final Date tomorow = new Date(new Date().getTime() + Task.MILLISECONDS_PER_DAY);
+    private final Category category = new Category(Category.TRAVAIL);
 
     @BeforeClass
     public void setUpBeforeClass() throws Exception {
         Reporter.log("\n==================================================================================================", true);
         Reporter.log(" - Start of " + this.getClass() + " -", true);
         Reporter.log("==================================================================================================", true);
+        this.t = new PunctualTask(title, Task.DATE_FORMAT.format(now), Task.DATE_FORMAT.format(tomorow), category);
+        t.setAccomplished(false);
     }
 
     @AfterClass
@@ -33,4 +44,21 @@ public abstract class MainTest {
     public void tearDownAfterMethod() throws Exception {
         Reporter.log("--------------------------------------------------------------------------------------------------", true);
     }
+
+    @Test
+    public void testIsLate() throws Exception {
+        assertTrue(!t.isLate());
+    }
+
+    @Test
+    public void testIsAccomplished() throws Exception {
+        assertTrue(!t.isAccomplished());
+    }
+
+    @Test
+    public void testSetAccomplished() throws Exception {
+        t.setAccomplished(true);
+        assertTrue(t.isAccomplished());
+    }
+
 }
