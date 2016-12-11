@@ -149,7 +149,11 @@ public class CreateTaskView extends JPanel {
 		JButton undoButton = new JButton("Cancel");
 		confirmPanel.add(undoButton);
 		JButton confirmButton = new JButton("Confirm");
-		confirmPanel.add(confirmButton);
+		if (task == null) {
+            confirmPanel.add(confirmButton);
+        } else if (!task.isAccomplished()) {
+            confirmPanel.add(confirmButton);
+        }
 		add(confirmPanel);
 
 		undoButton.addActionListener(e -> {
@@ -172,7 +176,7 @@ public class CreateTaskView extends JPanel {
                     if (task instanceof LongTask) {
                         ((LongTask) task).setAdvancement(progressBar.getValue());
                     }
-                    if (task instanceof LongTask) {
+                    if (task instanceof PunctualTask) {
                         ((PunctualTask) task).setAccomplished(isDone.isSelected());
                     }
                 } else { // We create a new task

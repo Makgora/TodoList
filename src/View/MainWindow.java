@@ -18,7 +18,6 @@ public class MainWindow extends JPanel {
 
     public MainWindow(JFrame mainFrame) {
         this.tasks = TaskList.getTaskList();
-		System.out.println(tasks);
 		this.mainFrame = mainFrame;
 		setLayout(new FlowLayout());
 		setupScrollList();
