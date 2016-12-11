@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TaskList implements Serializable {
 
@@ -127,14 +128,50 @@ public class TaskList implements Serializable {
     /**
      * Allow to sort the task by End Date
      */
-    public void sortByEndDate()
+    public void sortByEndDate() {
+        this.tasks.sort((task1, task2) -> {
+            if (task1.getEndDate().before(task2.getEndDate())) {
+                return -1;
+            } else if (task1.getEndDate().after(task2.getEndDate())) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+    }
+
+    public void sortByIntermediaryDeadlines()
     {
         this.tasks.sort((task1, task2) -> {
-            if(task1.getEndDate().before(task2.getEndDate()))
+
+            Date interDeadLT1 = task1.getEndDate();
+            Date interDeadLT2 = task2.getEndDate();
+
+            long todayDateTime = new Date().getTime();
+            long nextQuartPercent;
+            long betweenBeginAndEndTime;
+
+
+            if(task1 instanceof LongTask)
+            {
+                nextQuartPercent = nextQuartToDo(((LongTask)task1).getAdvancement())/100;
+                betweenBeginAndEndTime = task1.getBeginDate().getTime() - task1.getEndDate().getTime();
+                interDeadLT1 = new Date(todayDateTime + nextQuartPercent*betweenBeginAndEndTime);
+            }
+            if(task2 instanceof LongTask)
+            {
+                nextQuartPercent = nextQuartToDo(((LongTask)task2).getAdvancement())/100;
+                betweenBeginAndEndTime = task2.getBeginDate().getTime() - task2.getEndDate().getTime();
+                interDeadLT1 = new Date(todayDateTime + nextQuartPercent*betweenBeginAndEndTime);
+            }
+
+            System.out.println("Comparaison entre " + Task.DATE_FORMAT.format(interDeadLT1)  + " et " + Task.DATE_FORMAT.format(interDeadLT2));
+
+            if(interDeadLT1.before(interDeadLT2))
             {
                 return -1;
             }
-            else if(task1.getEndDate().after(task2.getEndDate()))
+            else if(interDeadLT1.after(interDeadLT2))
             {
                 return 1;
             }
@@ -143,20 +180,28 @@ public class TaskList implements Serializable {
                 return 0;
             }
         });
+
     }
 
-    public void sortByIntermediaryDeadlines()
+    public static int nextQuartToDo(int advancement)
     {
-        /*
-        this.tasks.sort((task1, task2) -> {
-            if(task1 instanceof LongTask && task2 instanceof LongTask)
-            {
-
-            }
-        });
-        */
+        if(advancement >= 0 && advancement < 25)
+        {
+            return 25;
+        }
+        else if(advancement < 50)
+        {
+            return 50;
+        }
+        else if(advancement < 75)
+        {
+            return 75;
+        }
+        else
+        {
+            return 100;
+        }
     }
-
 
     public void sortByTrouverUnNom()
     {
