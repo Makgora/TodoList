@@ -8,6 +8,8 @@ import java.io.Serializable;
 public class Category implements Serializable {
 
     private String name;
+    public static final int TRAVAIL = 1;
+    public static final int PERSONNEL = 2;
 
     /**
      * @param name, the name of the category
@@ -16,6 +18,14 @@ public class Category implements Serializable {
     public Category(String name) throws CategoryException
     {
         this.setName(name);
+    }
+
+    public Category(int i) {
+        if (i == TRAVAIL) {
+            this.name = "Travail";
+        } else if (i == PERSONNEL) {
+            this.name = "Personnel";
+        }
     }
 
     /**
