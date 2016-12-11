@@ -13,7 +13,7 @@ public abstract class Task implements Serializable {
     private Date beginDate;
     private Date endDate;
     private Category category;
-    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/mm/yy");
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yy");
 
     /**
      * Constructor
