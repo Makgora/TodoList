@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Random;
 
@@ -221,6 +222,22 @@ public class TaskList implements Serializable {
             this.tasks = arrayListReturned;
         }
     }
+
+    /*public void sortByPriority()
+    {
+        this.tasks.sort((task1, task2) -> {
+            if (task1.getPriority().equals(Task.Priority.HIGH) && task2.getPriority().equals(Task.Priority.MEDIUM)) {
+                return -1;
+            } else if (task1.getPriority().equals(Task.Priority.HIGH) && task2.getPriority().equals(Task.Priority.LOW)) {
+                return -1;
+            } else if(task1.getPriority().equals(Task.Priority.MEDIUM) && task2.getPriority().equals(Task.Priority.HIGH)){
+                return 1;
+            } else if(task1.getPriority().equals(Task.Priority.MEDIUM) && task2.getPriority().equals(Task.Priority.LOW))
+            {
+
+            }
+        });
+    }*/
 
     public ArrayList<Task> getHighPriorityTasks()
     {
