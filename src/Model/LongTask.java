@@ -34,27 +34,28 @@ public class LongTask extends Task implements Serializable {
     {
         long timeBetweenBeginAndEnd = this.getEndDate().getTime() - this.getBeginDate().getTime();
         long timeBetweenTodayAndEnd = this.getEndDate().getTime() - new Date().getTime();
-        long timeElapsed = timeBetweenBeginAndEnd / timeBetweenTodayAndEnd;
+        double timeElapsed = timeBetweenBeginAndEnd / timeBetweenTodayAndEnd;
 
+        System.out.println(timeElapsed);
         if(timeElapsed < 0.25)
         {
             return false;
         }
         else if (timeElapsed < 0.5)
         {
-            return this.advancement >= 25;
+            return this.advancement < 25;
         }
         else if (timeElapsed < 0.75)
         {
-            return this.advancement >= 50;
+            return this.advancement < 50;
         }
         else if (timeElapsed < 1)
         {
-            return this.advancement >= 75;
+            return this.advancement < 75;
         }
-        else //(timeElapsed == 1)
+        else
         {
-            return this.advancement >= 100;
+            return this.advancement < 100;
         }
     }
 
