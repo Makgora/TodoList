@@ -36,7 +36,6 @@ public class LongTask extends Task implements Serializable {
         long timeBetweenTodayAndEnd = this.getEndDate().getTime() - new Date().getTime();
         double timeElapsed = timeBetweenBeginAndEnd / timeBetweenTodayAndEnd;
 
-        System.out.println(timeElapsed);
         if(timeElapsed < 0.25)
         {
             return false;
