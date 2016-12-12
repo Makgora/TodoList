@@ -8,8 +8,8 @@ import java.io.Serializable;
 public class Category implements Serializable {
 
     private String name;
-    public static final int TRAVAIL = 1;
-    public static final int PERSONNEL = 2;
+    public static final int WORK = 1;
+    public static final int PERSONAL = 2;
 
     /**
      * @param name, the name of the category
@@ -21,10 +21,10 @@ public class Category implements Serializable {
     }
 
     public Category(int i) {
-        if (i == TRAVAIL) {
-            this.name = "Travail";
-        } else if (i == PERSONNEL) {
-            this.name = "Personnel";
+        if (i == WORK) {
+            this.name = "Work";
+        } else if (i == PERSONAL) {
+            this.name = "Personal";
         }
     }
 

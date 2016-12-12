@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.Category;
-import Model.Exception.CategoryException;
 import Model.Exception.TaskException;
 
 import java.io.File;
@@ -31,8 +30,8 @@ public class CategoryList implements Serializable {
             this.categories = deserialize().getCategories();
         } else {
             this.categories = new ArrayList<>();
-            addNewCategory(new Category(Category.TRAVAIL));
-            addNewCategory(new Category(Category.PERSONNEL));
+            addNewCategory(new Category(Category.WORK));
+            addNewCategory(new Category(Category.PERSONAL));
         }
         categoryList = this;
     }

@@ -198,7 +198,8 @@ public abstract class Task implements Serializable {
     {
         long dayToGo = ((getEndDate().getTime() - new Date().getTime()) / MILLISECONDS_PER_DAY) + 1;
 
-        String isAcc = this.isAccomplished() ? " est terminée" : " à terminer";
-        return "[" + this.title + "]" + isAcc + ", à finir pour dans " + dayToGo + " jours, " + this.category.getName() + ", " + this.getPriority();
+        String isAcc = this.isAccomplished() ? " is finished" : " is not finished";
+        String isLate = this.isLate() ? ", is late" : ", isn't late";
+        return "[" + this.title + "]" + isAcc + ", finish in " + dayToGo + " days, " + this.category.getName() + ", " + isLate ;
     }
 }

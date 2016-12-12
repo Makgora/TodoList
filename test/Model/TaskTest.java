@@ -16,7 +16,7 @@ public class TaskTest {
     private final String title = "title";
     private final Date now = new Date();
     private final Date tomorow = new Date(new Date().getTime() + Task.MILLISECONDS_PER_DAY);
-    private final Category category = new Category(Category.TRAVAIL);
+    private final Category category = new Category(Category.WORK);
     private final Task.Priority priority = Task.Priority.HIGH;
 
     @BeforeClass
