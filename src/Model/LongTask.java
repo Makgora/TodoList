@@ -5,6 +5,7 @@ import Model.Exception.TaskException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.PrimitiveIterator;
 
 public class LongTask extends Task implements Serializable {
 
@@ -19,9 +20,9 @@ public class LongTask extends Task implements Serializable {
      * @throws TaskException, can be throw if the task is already accomplished, or if some invalid value are passed
      * @throws ParseException, can be throw if the date are invalid
      */
-    public LongTask(String title, String beginDate, String endDate, Category category) throws TaskException, ParseException
+    public LongTask(String title, String beginDate, String endDate, Category category, Priority priority) throws TaskException, ParseException
     {
-        super(title, beginDate, endDate, category);
+        super(title, beginDate, endDate, category, priority);
         this.advancement = 0;
     }
 

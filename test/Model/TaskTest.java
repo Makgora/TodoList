@@ -17,14 +17,14 @@ public class TaskTest {
     private final Date now = new Date();
     private final Date tomorow = new Date(new Date().getTime() + Task.MILLISECONDS_PER_DAY);
     private final Category category = new Category(Category.TRAVAIL);
-
+    private final Task.Priority priority = Task.Priority.HIGH;
 
     @BeforeClass
     public void setUpBeforeClass() throws Exception {
         Reporter.log("\n==================================================================================================", true);
         Reporter.log(" - Start of " + this.getClass() + " -", true);
         Reporter.log("==================================================================================================", true);
-        this.t = new PunctualTask(title, Task.DATE_FORMAT.format(now), Task.DATE_FORMAT.format(tomorow), category);
+        this.t = new PunctualTask(title, Task.DATE_FORMAT.format(now), Task.DATE_FORMAT.format(tomorow), category, priority);
         t.setAccomplished(false);
     }
 

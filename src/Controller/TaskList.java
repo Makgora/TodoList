@@ -6,6 +6,7 @@ import Model.Exception.TaskException;
 import Model.LongTask;
 import Model.Task;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.function.Predicate;
+import java.util.Random;
 
 public class TaskList implements Serializable {
 
@@ -181,22 +182,86 @@ public class TaskList implements Serializable {
         });
     }
 
-    public ArrayList<Task> heightTasksToDo() throws TaskListException
+    public void eightTasksToDo() throws TaskListException
     {
-        if(TaskList.getTaskList().tasks.size() < 8)
+        if(TaskList.getTaskList().tasks.size() < 8 || this.getHighPriorityTasks().size() < 1 || this.getMediumPriorityTasks().size() < 3 || this.getLowPriorityTasks().size() < 5)
         {
-            throw new TaskListException("Need to have more of 8 tasks to use this function");
+            throw new TaskListException("Need to have more different tasks to use this function");
         }
         else
         {
-            /*TaskList taskList = TaskList.getTaskList();
-            taskList.sortByIntermediaryDeadlines();
-            ArrayList<Task> arrayList = new ArrayList<>();
-            arrayList.removeIf((Predicate<Task>) task -> {
-                //TODO
-            })*/
-            return null;
+            Random random = new Random();
+            ArrayList<Task> arrayListReturned = new ArrayList<>();
+            ArrayList<Task> arrayListCopied;
+
+            arrayListCopied = TaskList.getTaskList().getHighPriorityTasks();
+            for(int i = 0; i < 2; i++)
+            {
+                int randomNumber = random.nextInt(arrayListCopied.size());
+                arrayListReturned.add(arrayListCopied.get(randomNumber));
+                arrayListCopied.remove(randomNumber);
+            }
+
+            arrayListCopied = TaskList.getTaskList().getMediumPriorityTasks();
+            for(int i = 0; i < 3; i++)
+            {
+                int randomNumber = random.nextInt(arrayListCopied.size());
+                arrayListReturned.add(arrayListCopied.get(randomNumber));
+                arrayListCopied.remove(randomNumber);
+            }
+
+            arrayListCopied = TaskList.getTaskList().getLowPriorityTasks();
+            for(int i = 0; i < 5; i++)
+            {
+                int randomNumber = random.nextInt(arrayListCopied.size());
+                arrayListReturned.add(arrayListCopied.get(randomNumber));
+                arrayListCopied.remove(randomNumber);
+            }
+            arrayListReturned.addAll(this.tasks);
+            this.tasks = arrayListReturned;
         }
+    }
+
+    public ArrayList<Task> getHighPriorityTasks()
+    {
+        ArrayList<Task> arrayList = new ArrayList<>();
+
+        for(Task task : this.tasks)
+        {
+            if(task.getPriority().equals(Task.Priority.HIGH))
+            {
+                arrayList.add(task);
+            }
+        }
+        return arrayList;
+    }
+
+    public ArrayList<Task> getMediumPriorityTasks()
+    {
+        ArrayList<Task> arrayList = new ArrayList<>();
+
+        for(Task task : this.tasks)
+        {
+            if(task.getPriority().equals(Task.Priority.MEDIUM))
+            {
+                arrayList.add(task);
+            }
+        }
+        return arrayList;
+    }
+
+    public ArrayList<Task> getLowPriorityTasks()
+    {
+        ArrayList<Task> arrayList = new ArrayList<>();
+
+        for(Task task : this.tasks)
+        {
+            if(task.getPriority().equals(Task.Priority.LOW))
+            {
+                arrayList.add(task);
+            }
+        }
+        return arrayList;
     }
 
     @Override

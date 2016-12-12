@@ -1,6 +1,7 @@
 package View;
 
 import Controller.CategoryList;
+import Controller.Execption.TaskListException;
 import Controller.TaskList;
 import Model.Task;
 
@@ -87,7 +88,7 @@ public class MainWindow extends JPanel {
             taskJList.setListData(tasks.getAllTasks().toArray());
         });
 
-		JButton sort2Button = new JButton("Sort by intermediary deadlines");
+		JButton sort2Button = new JButton("Sort by inter deadlines");
 		sort2Button.addActionListener(e -> {
             tasks.sortByIntermediaryDeadlines();
             taskJList.setListData(tasks.getAllTasks().toArray());
@@ -95,8 +96,18 @@ public class MainWindow extends JPanel {
 
 		JButton sort3Button = new JButton("8 tasks to do");
 		sort3Button.addActionListener(e -> {
-			//TODO
-
+            try
+            {
+                tasks.eightTasksToDo();
+                taskJList.setListData(tasks.getAllTasks().toArray());
+            }
+            catch (TaskListException exception)
+            {
+                JOptionPane.showMessageDialog(mainFrame,
+                        exception.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
 			taskJList.setListData(tasks.getAllTasks().toArray());
 		});
 

@@ -19,9 +19,9 @@ public class PunctualTask extends Task implements Serializable {
      * @throws TaskException, can be throw if the task is already accomplished, or if some invalid value are passed
      * @throws ParseException, can be throw if the date are invalid
      */
-    public PunctualTask(String title, String beginDate, String endDate, Category category) throws TaskException, ParseException
+    public PunctualTask(String title, String beginDate, String endDate, Category category, Priority priority) throws TaskException, ParseException
     {
-        super(title, beginDate, endDate, category);
+        super(title, beginDate, endDate, category, priority);
         this.isAccomplished = false;
     }
 

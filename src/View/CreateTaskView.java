@@ -59,7 +59,19 @@ public class CreateTaskView extends JPanel {
         if (task == null) {
             add(punctualPanel);
         }
-		
+
+        JPanel priorityPanel = new JPanel();
+        priorityPanel.setLayout(new FlowLayout());
+        priorityPanel.setPreferredSize(dimension);
+        JLabel priorityLabel = new JLabel("Priority :");
+        priorityPanel.add(priorityLabel);
+        JComboBox<Task.Priority> priorityJComboBox = new JComboBox<>();
+        priorityJComboBox.addItem(Task.Priority.HIGH);
+        priorityJComboBox.addItem(Task.Priority.MEDIUM);
+        priorityJComboBox.addItem(Task.Priority.LOW);
+        priorityPanel.add(priorityJComboBox);
+        add(priorityPanel);
+
 		JPanel categoryPanel = new JPanel();
 		categoryPanel.setLayout(new FlowLayout());
 		categoryPanel.setPreferredSize(dimension);
@@ -167,12 +179,14 @@ public class CreateTaskView extends JPanel {
                 String beginDate = beginDateTextField.getText();
                 String endDate = endDateTextField.getText();
                 Category category = (Category) categoryList.getSelectedItem();
+                Object priority = priorityJComboBox.getSelectedItem();
 
                 if (task != null) { // We modify the task
                     task.setTitle(title);
                     task.setBeginDate(beginDate);
                     task.setEndDate(endDate);
                     task.setCategory(category);
+                    task.setPriority((Task.Priority)priority);
                     if (task instanceof LongTask) {
                         ((LongTask) task).setAdvancement(progressBar.getValue());
                     }
@@ -181,11 +195,11 @@ public class CreateTaskView extends JPanel {
                     }
                 } else { // We create a new task
                     if (isPunctual.isSelected()) {
-                        PunctualTask task = new PunctualTask(title, beginDate, endDate, category);
+                        PunctualTask task = new PunctualTask(title, beginDate, endDate, category, (Task.Priority)priority);
                         task.setAccomplished(isDone.isSelected());
                         TaskList.getTaskList().addNewTask(task);
                     } else {
-                        LongTask task = new LongTask(title, beginDate, endDate, category);
+                        LongTask task = new LongTask(title, beginDate, endDate, category, (Task.Priority)priority);
                         task.setAdvancement(progressBar.getValue());
                         TaskList.getTaskList().addNewTask(task);
                     }

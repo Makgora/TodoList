@@ -15,6 +15,11 @@ public abstract class Task implements Serializable {
     private Category category;
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yy");
     public static final long MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+    private Priority priority;
+
+    public enum Priority {
+        HIGH, MEDIUM, LOW;
+    }
 
     /**
      * Constructor
@@ -22,15 +27,17 @@ public abstract class Task implements Serializable {
      * @param beginDate, the begin date of the task
      * @param endDate, the date the task should be done for
      * @param category, the category related to this task
+     * @param priority, the priority of this task
      * @throws TaskException, can be throw if the task is already accomplished, or if some invalid value are passed
      * @throws ParseException, can be throw if the date are invalid
      */
-    public Task(String title, String beginDate, String endDate, Category category) throws TaskException, ParseException
+    public Task(String title, String beginDate, String endDate, Category category, Priority priority) throws TaskException, ParseException
     {
         this.setTitle(title);
         this.setBeginDate(beginDate);
         this.setEndDate(endDate);
         this.setCategory(category);
+        this.setPriority(priority);
     }
 
     /**
@@ -65,6 +72,21 @@ public abstract class Task implements Serializable {
     public Category getCategory()
     {
         return this.category;
+    }
+
+    /**
+     * Getter
+     * @return the priority
+     */
+    public Priority getPriority() {return this.priority;}
+
+    /**
+     * Setter
+     * @param newPriority, the new priority of the task
+     */
+    public void setPriority(Priority newPriority)
+    {
+        this.priority = newPriority;
     }
 
     /**
@@ -174,9 +196,9 @@ public abstract class Task implements Serializable {
     @Override
     public String toString()
     {
-        long dayToGo = (getEndDate().getTime() - new Date().getTime()) / MILLISECONDS_PER_DAY;
+        long dayToGo = ((getEndDate().getTime() - new Date().getTime()) / MILLISECONDS_PER_DAY) + 1;
 
-        String isAcc = this.isAccomplished() ? ", est Terminée" : ", à terminer";
-        return this.title + isAcc + ", à finir pour dans " + dayToGo + " jours, " + this.category.getName();
+        String isAcc = this.isAccomplished() ? " est terminée" : " à terminer";
+        return "[" + this.title + "]" + isAcc + ", à finir pour dans " + dayToGo + " jours, " + this.category.getName() + ", " + this.getPriority();
     }
 }
