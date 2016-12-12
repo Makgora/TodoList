@@ -33,6 +33,7 @@ public class MainWindow extends JPanel {
 		taskJList.setFixedCellHeight(30);
 		JScrollPane taskListPanel = new JScrollPane(taskJList);
 		taskListPanel.setPreferredSize(new Dimension(500, 300));
+		taskJList.setCellRenderer(new CellRenderer());
 
    		add(taskListPanel);
 	}
