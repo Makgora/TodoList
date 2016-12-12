@@ -200,6 +200,6 @@ public abstract class Task implements Serializable {
 
         String isAcc = this.isAccomplished() ? " is finished" : " is not finished";
         String isLate = this.isLate() ? ", is late" : ", isn't late";
-        return "[" + this.title + "]" + isAcc + ", finish in " + dayToGo + " days, " + this.category.getName() + ", " + isLate ;
+        return "[" + this.title + "]" + isAcc + ", finish in " + dayToGo + " days, " + this.category.getName() + isLate ;
     }
 }
