@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.Execption.TaskListException;
 import Model.Category;
 import Model.Exception.TaskException;
 import Model.LongTask;
@@ -13,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.function.Predicate;
 
 public class TaskList implements Serializable {
 
@@ -179,11 +181,22 @@ public class TaskList implements Serializable {
         });
     }
 
-    public void sortByTrouverUnNom()
+    public ArrayList<Task> heightTasksToDo() throws TaskListException
     {
-        //this.tasks.sort((task1, task2) -> {
-            //TODO
-        //});
+        if(TaskList.getTaskList().tasks.size() < 8)
+        {
+            throw new TaskListException("Need to have more of 8 tasks to use this function");
+        }
+        else
+        {
+            /*TaskList taskList = TaskList.getTaskList();
+            taskList.sortByIntermediaryDeadlines();
+            ArrayList<Task> arrayList = new ArrayList<>();
+            arrayList.removeIf((Predicate<Task>) task -> {
+                //TODO
+            })*/
+            return null;
+        }
     }
 
     @Override

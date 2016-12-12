@@ -5,6 +5,7 @@ import Controller.TaskList;
 import Model.Task;
 
 import javax.swing.*;
+import javax.swing.text.Position;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -92,10 +93,10 @@ public class MainWindow extends JPanel {
             taskJList.setListData(tasks.getAllTasks().toArray());
         });
 
-		JButton sort3Button = new JButton("Sort by ?");
+		JButton sort3Button = new JButton("8 tasks to do");
 		sort3Button.addActionListener(e -> {
-			//TODO Replace .sortByEndDate() by the third sort
-			tasks.sortByEndDate();
+			//TODO
+
 			taskJList.setListData(tasks.getAllTasks().toArray());
 		});
 
@@ -125,6 +126,7 @@ public class MainWindow extends JPanel {
         });
 		mainView.setContentPane(new MainWindow(mainView));
 		mainView.setSize(500, 500);
+		mainView.setLocation(400, 100);
 		mainView.setVisible(true);
 		mainView.setResizable(false);
 		mainView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
