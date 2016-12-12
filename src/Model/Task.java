@@ -14,6 +14,7 @@ public abstract class Task implements Serializable {
     private Date endDate;
     private Category category;
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yy");
+    public static final long MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
 
     /**
      * Constructor
@@ -173,8 +174,9 @@ public abstract class Task implements Serializable {
     @Override
     public String toString()
     {
-        String endDate = DATE_FORMAT.format(getEndDate());
+        long dayToGo = (getEndDate().getTime() - new Date().getTime()) / MILLISECONDS_PER_DAY;
+
         String isAcc = this.isAccomplished() ? ", est Terminée" : ", à terminer";
-        return this.title + isAcc + ", a finir pour " + endDate + ", " + this.category.getName();
+        return this.title + isAcc + ", à finir pour dans " + dayToGo + " jours, " + this.category.getName();
     }
 }
