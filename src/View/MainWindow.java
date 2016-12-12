@@ -82,6 +82,7 @@ public class MainWindow extends JPanel {
 	private void setupAppButtonPanel() {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
+		buttonPanel.setPreferredSize(new Dimension(500, 70));
 
 		JButton sort1Button = new JButton("Sort by end date");
 		sort1Button.addActionListener(e -> {
@@ -112,9 +113,17 @@ public class MainWindow extends JPanel {
 			taskJList.setListData(tasks.getAllTasks().toArray());
 		});
 
+
+		JButton sort4Button = new JButton("Sort by Priority");
+		sort4Button.addActionListener(e -> {
+			tasks.sortByPriority();
+			taskJList.setListData(tasks.getAllTasks().toArray());
+		});
+
         buttonPanel.add(sort1Button);
         buttonPanel.add(sort2Button);
 		buttonPanel.add(sort3Button);
+		buttonPanel.add(sort4Button);
         add(buttonPanel);
 	}
 	

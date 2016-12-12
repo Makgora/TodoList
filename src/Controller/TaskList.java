@@ -223,21 +223,51 @@ public class TaskList implements Serializable {
         }
     }
 
-    /*public void sortByPriority()
+    public void sortByPriority()
     {
         this.tasks.sort((task1, task2) -> {
-            if (task1.getPriority().equals(Task.Priority.HIGH) && task2.getPriority().equals(Task.Priority.MEDIUM)) {
-                return -1;
-            } else if (task1.getPriority().equals(Task.Priority.HIGH) && task2.getPriority().equals(Task.Priority.LOW)) {
-                return -1;
-            } else if(task1.getPriority().equals(Task.Priority.MEDIUM) && task2.getPriority().equals(Task.Priority.HIGH)){
-                return 1;
-            } else if(task1.getPriority().equals(Task.Priority.MEDIUM) && task2.getPriority().equals(Task.Priority.LOW))
+            if (task1.getPriority().equals(Task.Priority.HIGH) && task2.getPriority().equals(Task.Priority.HIGH))
             {
-
+                return 0;
+            }
+            else if (task1.getPriority().equals(Task.Priority.HIGH) && task2.getPriority().equals(Task.Priority.MEDIUM))
+            {
+                return -1;
+            }
+            else if (task1.getPriority().equals(Task.Priority.HIGH) && task2.getPriority().equals(Task.Priority.LOW))
+            {
+                return -1;
+            }
+            else if(task1.getPriority().equals(Task.Priority.MEDIUM) && task2.getPriority().equals(Task.Priority.HIGH))
+            {
+                return 1;
+            }
+            else if (task1.getPriority().equals(Task.Priority.MEDIUM) && task2.getPriority().equals(Task.Priority.MEDIUM))
+            {
+                return 0;
+            }
+            else if(task1.getPriority().equals(Task.Priority.MEDIUM) && task2.getPriority().equals(Task.Priority.LOW))
+            {
+                return -1;
+            }
+            else if(task1.getPriority().equals(Task.Priority.LOW) && task2.getPriority().equals(Task.Priority.HIGH))
+            {
+                return 1;
+            }
+            else if(task1.getPriority().equals(Task.Priority.LOW) && task2.getPriority().equals(Task.Priority.MEDIUM))
+            {
+                return 1;
+            }
+            else if(task1.getPriority().equals(Task.Priority.LOW) && task2.getPriority().equals(Task.Priority.LOW))
+            {
+                return 0;
+            }
+            else
+            {
+                return 0;
             }
         });
-    }*/
+    }
 
     public ArrayList<Task> getHighPriorityTasks()
     {
