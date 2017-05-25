@@ -1,1 +1,0 @@
-Une Model.LongTask est elle composee de plusieurs Model.PunctualTask ?
